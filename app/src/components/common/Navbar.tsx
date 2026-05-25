@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     : 'U';
 
   return (
-    <nav className="relative z-50 bg-gradient-to-r from-primary-500 via-primary-600 to-secondary-500 text-white shadow-lg">
+    <nav style={{ backgroundColor: '#082f49' }} className="fixed top-0 left-0 right-0 z-50 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo Section */}
@@ -59,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <>
                 {/* User Info */}
                 <div className="text-right">
-                  <p className="text-sm font-medium">{user.name}</p>
+                  <p className="text-sm font-medium text-white">{user.name}</p>
                   <p className="text-xs text-white/80">{user.role}</p>
                 </div>
 
