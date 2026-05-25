@@ -1,0 +1,95 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Usuarios: solo el dueño puede leer/escribir su documento
+    match /users/{userId} {
+      allow read, update, delete:
+        if request.auth != null
+        && request.auth.uid == userId;
+      
+      allow create:
+        if request.auth != null
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.email is string
+        && request.resource.data.name is string
+        && request.resource.data.role in ['admin', 'lider', 'colaborador'];
+    }
+
+    // Evaluaciones: dueño lee/escribe, admin ve todas
+    match /evaluations/{evaluationId} {
+      allow read:
+        if request.auth != null
+        && (resource.data.userId == request.auth.uid
+            || request.auth.token.admin == true);
+      
+      allow create:
+        if request.auth != null
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.evaluatorId is string
+        && request.resource.data.status in ['pendiente', 'en_progreso', 'completada'];
+      
+      allow update:
+        if request.auth != null
+        && (resource.data.userId == request.auth.uid
+            || request.auth.token.admin == true);
+      
+      allow delete:
+        if request.auth != null
+        && request.auth.token.admin == true;
+
+      // Subcollección de respuestas: solo el propietario de evaluación
+      match /answers/{answerId} {
+        allow read, write:
+          if request.auth != null
+          && get(/databases/$(database)/documents/evaluations/$(evaluationId)).data.userId == request.auth.uid;
+      }
+    }
+
+    // Preguntas: todos leen, solo admin escribe
+    match /questions/{questionId} {
+      allow read:
+        if request.auth != null;
+      
+      allow create, update, delete:
+        if request.auth != null
+        && request.auth.token.admin == true;
+    }
+
+    // Tipos de evaluación: todos leen, solo admin escribe
+    match /evaluationTypes/{typeId} {
+      allow read:
+        if request.auth != null;
+      
+      allow create, update, delete:
+        if request.auth != null
+        && request.auth.token.admin == true;
+    }
+
+    // Reportes: dueño lee, admin crea/actualiza
+    match /reports/{reportId} {
+      allow read:
+        if request.auth != null
+        && (resource.data.collaboratorId == request.auth.uid
+            || request.auth.token.admin == true);
+      
+      allow create, update, delete:
+        if request.auth != null
+        && request.auth.token.admin == true;
+    }
+
+    // Auditoría: solo admin puede leer, sistema puede escribir
+    match /audit_logs/{logId} {
+      allow read:
+        if request.auth != null
+        && request.auth.token.admin == true;
+      
+      allow create:
+        if request.auth != null;
+    }
+
+    // Bloquear acceso a cualquier otra colección
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
