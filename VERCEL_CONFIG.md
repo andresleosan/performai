@@ -1,6 +1,7 @@
 # 🚀 Configurar Variables de Entorno en Vercel
 
 ## Error Inicial
+
 ```
 Tras finalizar la compilación, no se encontró ningún directorio de salida llamado "dist"
 ```
@@ -23,16 +24,17 @@ https://vercel.com/dashboard
 
 ### 4️⃣ Agregar 6 Variables (copiar exactamente):
 
-| Variable | Valor | Descripción |
-|----------|-------|-----------|
-| `VITE_FIREBASE_API_KEY` | `AIzaSyDOobkXd8ZSxny3DhdFlltuqbR8ebYfsK0` | API Key |
-| `VITE_FIREBASE_AUTH_DOMAIN` | `performai-bb68f.firebaseapp.com` | Auth Domain |
-| `VITE_FIREBASE_PROJECT_ID` | `performai-bb68f` | Project ID |
-| `VITE_FIREBASE_STORAGE_BUCKET` | `performai-bb68f.firebasestorage.app` | Storage Bucket |
-| `VITE_FIREBASE_MESSAGING_SENDER_ID` | `942106675923` | Messaging Sender ID |
-| `VITE_FIREBASE_APP_ID` | `1:942106675923:web:5336f627de70294f3d2226` | App ID |
+| Variable                            | Valor                                       | Descripción         |
+| ----------------------------------- | ------------------------------------------- | ------------------- |
+| `VITE_FIREBASE_API_KEY`             | `AIzaSyDOobkXd8ZSxny3DhdFlltuqbR8ebYfsK0`   | API Key             |
+| `VITE_FIREBASE_AUTH_DOMAIN`         | `performai-bb68f.firebaseapp.com`           | Auth Domain         |
+| `VITE_FIREBASE_PROJECT_ID`          | `performai-bb68f`                           | Project ID          |
+| `VITE_FIREBASE_STORAGE_BUCKET`      | `performai-bb68f.firebasestorage.app`       | Storage Bucket      |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID` | `942106675923`                              | Messaging Sender ID |
+| `VITE_FIREBASE_APP_ID`              | `1:942106675923:web:5336f627de70294f3d2226` | App ID              |
 
 ### 5️⃣ Para cada variable:
+
 - Pegar el valor
 - Seleccionar scopes: ✅ Production ✅ Preview ✅ Development
 - Hacer clic en "Save"
@@ -40,6 +42,7 @@ https://vercel.com/dashboard
 ### 6️⃣ Redeploy
 
 Una vez configuradas todas las variables:
+
 1. Ir a "Deployments"
 2. Hacer clic en los "..." del último deployment
 3. Seleccionar "Redeploy"
@@ -103,6 +106,7 @@ Después de redeploy:
 ### Error: "Cannot find module 'firebase'"
 
 ✅ **Solución:** Las dependencias no se instalaron. Ejecutar:
+
 ```bash
 cd app && npm install
 ```
