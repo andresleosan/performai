@@ -57,10 +57,10 @@ export const DashboardAdminPage: React.FC = () => {
 
   return (
     <AppLayout user={user} onLogout={logout}>
-      <div className="px-4 py-8 max-w-7xl mx-auto">
+      <div className="w-full px-4 py-8">
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-primary-600 to-blue-500 bg-clip-text text-transparent mb-2">Dashboard Administrativo</h1>
+          <h1 className="text-5xl font-bold text-primary-800 mb-2">Dashboard Administrativo</h1>
           <p className="text-lg text-gray-600">Gestiona y monitorea todas las evaluaciones de la plataforma</p>
         </div>
 

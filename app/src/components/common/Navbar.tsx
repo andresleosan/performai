@@ -44,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     : 'U';
 
   return (
-    <nav className="bg-gradient-to-r from-primary-500 via-primary-600 to-secondary-500 text-white shadow-lg">
+    <nav className="relative z-50 bg-gradient-to-r from-primary-500 via-primary-600 to-secondary-500 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo Section */}

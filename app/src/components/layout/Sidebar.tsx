@@ -69,17 +69,17 @@ export const Sidebar: React.FC = () => {
               className={clsx(
                 'relative w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left group border',
                 isActive(item.path)
-                  ? 'bg-gradient-to-r from-primary-700 to-primary-600 text-white shadow-lg border-primary-300 ring-2 ring-primary-200 scale-[1.02]'
+                  ? 'bg-primary-100 text-primary-900 shadow-lg border-primary-400 ring-2 ring-primary-200 scale-[1.02]'
                   : 'text-gray-700 border-transparent hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700'
               )}
               title={item.label}
             >
               {isActive(item.path) && (
-                <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-secondary-300" />
+                <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-primary-700" />
               )}
               <span className="text-xl flex-shrink-0">{item.icon}</span>
               {isOpen && (
-                <span className={clsx('font-semibold text-sm truncate', isActive(item.path) && 'text-white')}>
+                <span className={clsx('font-semibold text-sm truncate', isActive(item.path) && 'text-primary-900')}>
                   {item.label}
                 </span>
               )}
