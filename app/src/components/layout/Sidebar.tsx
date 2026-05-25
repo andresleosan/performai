@@ -43,10 +43,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
               aria-current={isActive(item.path) ? 'page' : undefined}
               aria-label={item.label}
               className={clsx(
-                'relative w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left group border',
+                'relative w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left group',
                 isActive(item.path)
-                  ? 'bg-primary-100 text-primary-900 shadow-lg border-primary-400 scale-[1.02] focus:outline-none'
-                  : 'text-gray-700 border-transparent hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700 focus:outline-none'
+                  ? 'bg-primary-100 text-primary-900 focus:outline-none focus:ring-0'
+                  : 'text-gray-700 border border-transparent hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700 focus:outline-none focus:ring-0'
               )}
             >
               {/* left indicator removed to avoid small visual artifact */}
