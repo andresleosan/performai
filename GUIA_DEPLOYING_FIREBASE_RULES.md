@@ -3,11 +3,13 @@
 ## Requisitos Previos
 
 1. **Firebase CLI instalado:**
+
    ```bash
    npm install -g firebase-tools
    ```
 
 2. **Autenticarse en Firebase:**
+
    ```bash
    firebase login
    ```
@@ -65,14 +67,14 @@ Esto inicia emuladores locales para probar reglas antes de desplegar.
 
 ### 📖 Colecciones Protegidas
 
-| Colección | Lectura | Escritura | Notas |
-|-----------|---------|-----------|-------|
-| **users** | Solo el dueño | Solo el dueño | Perfil del usuario |
-| **evaluations** | Dueño + admin | Dueño + admin | Evaluaciones 360 |
-| **questions** | Todos autenticados | Solo admin | Preguntas de evaluación |
-| **evaluationTypes** | Todos autenticados | Solo admin | Tipos de evaluación |
-| **reports** | Dueño + admin | Solo admin | Reportes finales |
-| **audit_logs** | Solo admin | Todos autenticados | Registro de auditoría |
+| Colección           | Lectura            | Escritura          | Notas                   |
+| ------------------- | ------------------ | ------------------ | ----------------------- |
+| **users**           | Solo el dueño      | Solo el dueño      | Perfil del usuario      |
+| **evaluations**     | Dueño + admin      | Dueño + admin      | Evaluaciones 360        |
+| **questions**       | Todos autenticados | Solo admin         | Preguntas de evaluación |
+| **evaluationTypes** | Todos autenticados | Solo admin         | Tipos de evaluación     |
+| **reports**         | Dueño + admin      | Solo admin         | Reportes finales        |
+| **audit_logs**      | Solo admin         | Todos autenticados | Registro de auditoría   |
 
 ### 🔑 Conceptos Clave
 
@@ -99,7 +101,7 @@ match /nueva_coleccion/{docId} {
     if request.auth != null
     && (resource.data.userId == request.auth.uid
         || request.auth.token.admin == true);
-  
+
   allow write:
     if request.auth != null
     && request.auth.token.admin == true;
@@ -107,6 +109,7 @@ match /nueva_coleccion/{docId} {
 ```
 
 Luego desplegar:
+
 ```bash
 firebase deploy --only firestore:rules
 ```
@@ -116,6 +119,7 @@ firebase deploy --only firestore:rules
 ### ❌ Error: "Permission Denied"
 
 **Causa típica:** Las reglas están muy restrictivas
+
 - Verificar que `request.auth != null` (usuario autenticado)
 - Verificar que el `userId` en el documento coincide con `request.auth.uid`
 
