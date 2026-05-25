@@ -65,23 +65,28 @@ export const Sidebar: React.FC = () => {
             <button
               key={item.path}
               onClick={() => navigate(item.path)}
+              aria-current={isActive(item.path) ? 'page' : undefined}
               className={clsx(
-                'w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left group',
+                'relative w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left group border',
                 isActive(item.path)
-                  ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-primary-50'
+                  ? 'bg-gradient-to-r from-primary-700 to-primary-600 text-white shadow-lg border-primary-300 ring-2 ring-primary-200 scale-[1.02]'
+                  : 'text-gray-700 border-transparent hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700'
               )}
               title={item.label}
             >
+              {isActive(item.path) && (
+                <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-secondary-300" />
+              )}
               <span className="text-xl flex-shrink-0">{item.icon}</span>
-              {isOpen && <span className="font-medium text-sm truncate">{item.label}</span>}
+              {isOpen && (
+                <span className={clsx('font-semibold text-sm truncate', isActive(item.path) && 'text-white')}>
+                  {item.label}
+                </span>
+              )}
             </button>
           ))}
         </div>
       </aside>
-
-      {/* Main content wrapper adjustment */}
-      <div className={clsx('transition-all duration-300', isOpen ? 'ml-64' : 'ml-20')} />
 
       {/* Toggle Button */}
       <button
