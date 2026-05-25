@@ -1,0 +1,14 @@
+{
+  "name": "performai-root",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "install": "cd app && npm install",
+    "build": "cd app && npm run build",
+    "dev": "cd app && npm run dev",
+    "start": "cd app && npm run start"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
