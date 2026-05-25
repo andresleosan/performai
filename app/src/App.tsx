@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { EvaluationProvider } from '@/contexts/EvaluationContext';
-import { LoginPage } from '@/pages/LoginPage';
 import {
   DashboardAdminPage,
   DashboardLiderPage,
@@ -37,7 +36,6 @@ function App() {
       <AuthProvider>
         <EvaluationProvider>
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
             
             {/* Admin Dashboard */}
             <Route
