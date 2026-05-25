@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PerformAI - Editor de Preguntas</title>
+    <style>
+      :root {
+        --primary-color: #6c3e99;
+        --secondary-color: #003a70;
+        --white: #ffffff;
+        --gray-light: #f5f5f5;
+        --gray-medium: #9e9e9e;
+        --success-color: #4caf50;
+        --danger-color: #e74c3c;
+
+        --font-primary: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        --font-size-base: 16px;
+        --font-size-small: 14px;
+        --font-size-h3: 20px;
+        --font-size-h2: 24px;
+
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+
+        --radius-md: 8px;
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-base);
+        line-height: 1.6;
+        color: #000;
+        background: var(--gray-light);
+      }
+
+      /* HEADER */
+      .navbar {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+        color: var(--white);
+        padding: var(--space-md) var(--space-lg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow-md);
+      }
+
+      .navbar-brand {
+        font-size: var(--font-size-h3);
+        font-weight: bold;
+      }
+
+      /* CONTAINER */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: var(--space-lg);
+      }
+
+      h1 {
+        color: var(--secondary-color);
+        margin-bottom: var(--space-lg);
+        font-size: 28px;
+      }
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: var(--font-size-h2);
+        margin: var(--space-lg) 0 var(--space-md);
+      }
+
+      /* FILTER */
+      .filter-group {
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        margin-bottom: var(--space-lg);
+        display: flex;
+        gap: var(--space-md);
+        align-items: flex-end;
+      }
+
+      .form-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: var(--space-sm);
+        font-weight: 600;
+        color: var(--secondary-color);
+        font-size: var(--font-size-small);
+      }
+
+      select {
+        width: 100%;
+        padding: var(--space-sm) var(--space-md);
+        border: 1px solid #ddd;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-family: var(--font-primary);
+      }
+
+      select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(108, 62, 153, 0.1);
+      }
+
+      /* BUTTON */
+      .btn {
+        display: inline-block;
+        padding: var(--space-md) var(--space-lg);
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-height: 48px;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary-color);
+      }
+
+      .btn-sm {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--font-size-small);
+        min-height: auto;
+      }
+
+      .btn-danger {
+        background-color: var(--danger-color);
+      }
+
+      /* TABLE */
+      .table-container {
+        background: var(--white);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        overflow-x: auto;
+        margin-bottom: var(--space-xl);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: var(--white);
+      }
+
+      th,
+      td {
+        padding: var(--space-md);
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      tbody tr:hover {
+        background: var(--gray-light);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: 4px;
+        font-size: var(--font-size-small);
+        font-weight: 600;
+      }
+
+      .badge-base {
+        background-color: #e0e0e0;
+        color: #424242;
+      }
+
+      .badge-specific {
+        background-color: var(--primary-color);
+        color: var(--white);
+      }
+
+      .badge-active {
+        background-color: var(--success-color);
+        color: var(--white);
+      }
+
+      /* DRAG HINT */
+      .drag-handle {
+        cursor: grab;
+        color: var(--gray-medium);
+        user-select: none;
+      }
+
+      .drag-handle:active {
+        cursor: grabbing;
+      }
+
+      /* SECTION */
+      .section {
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        margin-bottom: var(--space-lg);
+      }
+
+      .section-title {
+        color: var(--secondary-color);
+        font-size: var(--font-size-h3);
+        margin-bottom: var(--space-md);
+        padding-bottom: var(--space-md);
+        border-bottom: 2px solid var(--gray-light);
+      }
+
+      .form-section {
+        margin-bottom: var(--space-lg);
+      }
+
+      .form-section:last-child {
+        margin-bottom: 0;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 80px;
+        padding: var(--space-md);
+        border: 1px solid #ddd;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-family: var(--font-primary);
+        resize: vertical;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(108, 62, 153, 0.1);
+      }
+
+      .actions {
+        display: flex;
+        gap: var(--space-sm);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .container {
+          padding: var(--space-md);
+        }
+
+        .navbar {
+          flex-direction: column;
+          gap: var(--space-md);
+          text-align: center;
+        }
+
+        .filter-group {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .form-group {
+          min-width: unset;
+        }
+
+        table {
+          font-size: var(--font-size-small);
+        }
+
+        th,
+        td {
+          padding: var(--space-sm);
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        .btn-sm {
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: var(--space-sm);
+        }
+
+        .section {
+          padding: var(--space-md);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="navbar-brand">🎯 PerformAI</div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <h1>Editor de Preguntas</h1>
+
+      <!-- FILTER -->
+      <div class="filter-group">
+        <div class="form-group">
+          <label for="worker-type">Filtrar por Tipo de Trabajador:</label>
+          <select id="worker-type">
+            <option value="all">Todas las preguntas</option>
+            <option value="base">Preguntas Base (Todos)</option>
+            <option value="gerente">Gerente</option>
+            <option value="senior">Senior</option>
+            <option value="junior">Junior</option>
+            <option value="pasante">Pasante</option>
+          </select>
+        </div>
+        <button class="btn btn-secondary">Aplicar Filtro</button>
+      </div>
+
+      <!-- QUESTIONS TABLE -->
+      <h2>Preguntas Actuales</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30px"></th>
+              <th>Pregunta</th>
+              <th>Tipo</th>
+              <th>Categoría</th>
+              <th>Activo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="drag-handle">⋮⋮</span></td>
+              <td>¿Cumples con los plazos establecidos?</td>
+              <td><span class="badge badge-base">Base</span></td>
+              <td>Puntualidad</td>
+              <td><span class="badge badge-active">Sí</span></td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-sm">Editar</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="drag-handle">⋮⋮</span></td>
+              <td>¿Demuestras capacidad de liderazgo?</td>
+              <td><span class="badge badge-specific">Gerente</span></td>
+              <td>Liderazgo</td>
+              <td><span class="badge badge-active">Sí</span></td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-sm">Editar</button>
+                  <button class="btn btn-sm btn-danger">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="drag-handle">⋮⋮</span></td>
+              <td>¿Colaboras efectivamente con el equipo?</td>
+              <td><span class="badge badge-base">Base</span></td>
+              <td>Colaboración</td>
+              <td><span class="badge badge-active">Sí</span></td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-sm">Editar</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="drag-handle">⋮⋮</span></td>
+              <td>¿Tomas iniciativa en proyectos?</td>
+              <td><span class="badge badge-specific">Senior</span></td>
+              <td>Iniciativa</td>
+              <td><span class="badge badge-active">Sí</span></td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-sm">Editar</button>
+                  <button class="btn btn-sm btn-danger">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="drag-handle">⋮⋮</span></td>
+              <td>¿Aprendes rápidamente nuevas tecnologías?</td>
+              <td><span class="badge badge-specific">Junior</span></td>
+              <td>Aprendizaje</td>
+              <td><span class="badge badge-active">Sí</span></td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-sm">Editar</button>
+                  <button class="btn btn-sm btn-danger">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="drag-handle">⋮⋮</span></td>
+              <td>¿Tienes pensamiento crítico?</td>
+              <td><span class="badge badge-base">Base</span></td>
+              <td>Análisis</td>
+              <td><span class="badge badge-active">Sí</span></td>
+              <td>
+                <div class="actions">
+                  <button class="btn btn-sm">Editar</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CREATE NEW QUESTION -->
+      <h2>Crear Nueva Pregunta</h2>
+      <div class="section">
+        <div class="form-section">
+          <label for="question-text">Enunciado de la Pregunta *</label>
+          <textarea
+            id="question-text"
+            placeholder="Ej: ¿Demuestras capacidad de resolver conflictos?"
+          ></textarea>
+        </div>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+          "
+        >
+          <div class="form-section">
+            <label for="question-type">Tipo de Pregunta *</label>
+            <select id="question-type">
+              <option value="">-- Selecciona --</option>
+              <option value="base">Pregunta Base (Todos)</option>
+              <option value="gerente">Gerente</option>
+              <option value="senior">Senior</option>
+              <option value="junior">Junior</option>
+              <option value="pasante">Pasante</option>
+            </select>
+          </div>
+
+          <div class="form-section">
+            <label for="question-category">Categoría *</label>
+            <select id="question-category">
+              <option value="">-- Selecciona --</option>
+              <option value="puntualidad">Puntualidad</option>
+              <option value="liderazgo">Liderazgo</option>
+              <option value="colaboracion">Colaboración</option>
+              <option value="iniciativa">Iniciativa</option>
+              <option value="aprendizaje">Aprendizaje</option>
+              <option value="comunicacion">Comunicación</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section" style="margin-top: var(--space-md)">
+          <label> <input type="checkbox" checked /> Preguntar activa </label>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+          "
+        >
+          <button class="btn">Crear Pregunta</button>
+          <button class="btn btn-secondary">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PerformAI - Dashboard Colaborador</title>
+    <style>
+      :root {
+        --primary-color: #6c3e99;
+        --secondary-color: #003a70;
+        --white: #ffffff;
+        --gray-light: #f5f5f5;
+        --gray-medium: #9e9e9e;
+        --success-color: #4caf50;
+        --warning-color: #ff9800;
+        --danger-color: #e74c3c;
+
+        --font-primary: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        --font-size-base: 16px;
+        --font-size-small: 14px;
+        --font-size-h3: 20px;
+        --font-size-h2: 24px;
+
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+
+        --radius-md: 8px;
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-base);
+        line-height: 1.6;
+        color: #000;
+        background: var(--gray-light);
+      }
+
+      /* HEADER */
+      .navbar {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+        color: var(--white);
+        padding: var(--space-md) var(--space-lg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow-md);
+      }
+
+      .navbar-brand {
+        font-size: var(--font-size-h3);
+        font-weight: bold;
+      }
+
+      .navbar-user {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      /* CONTAINER */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: var(--space-lg);
+      }
+
+      h1 {
+        color: var(--secondary-color);
+        margin-bottom: var(--space-lg);
+        font-size: 28px;
+      }
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: var(--font-size-h2);
+        margin: var(--space-lg) 0 var(--space-md);
+      }
+
+      /* ALERT */
+      .alert {
+        background: #e8f5e9;
+        border-left: 4px solid var(--success-color);
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-lg);
+        color: #1b5e20;
+      }
+
+      .alert-title {
+        font-weight: 600;
+        margin-bottom: var(--space-sm);
+      }
+
+      /* EVALUATION CARD */
+      .evaluation-card {
+        background: var(--white);
+        border-left: 4px solid var(--primary-color);
+        padding: var(--space-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        margin-bottom: var(--space-lg);
+      }
+
+      .evaluation-card h3 {
+        color: var(--secondary-color);
+        margin-bottom: var(--space-sm);
+      }
+
+      .evaluation-card p {
+        color: var(--gray-medium);
+        margin-bottom: var(--space-md);
+      }
+
+      .evaluation-info {
+        background: var(--gray-light);
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-md);
+        font-size: var(--font-size-small);
+      }
+
+      .evaluation-info span {
+        display: block;
+        margin-bottom: var(--space-sm);
+      }
+
+      .evaluation-info span:last-child {
+        margin-bottom: 0;
+      }
+
+      /* TABS */
+      .tabs {
+        display: flex;
+        gap: 0;
+        margin-bottom: var(--space-lg);
+        border-bottom: 2px solid #ddd;
+      }
+
+      .tab-btn {
+        flex: 1;
+        padding: var(--space-md);
+        background: none;
+        border: none;
+        border-bottom: 3px solid transparent;
+        color: var(--gray-medium);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .tab-btn.active {
+        color: var(--primary-color);
+        border-bottom-color: var(--primary-color);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* REPORTS */
+      .reports-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--space-md);
+      }
+
+      .report-item {
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+      }
+
+      .report-item h3 {
+        color: var(--secondary-color);
+        margin-bottom: var(--space-sm);
+      }
+
+      .report-item-meta {
+        font-size: var(--font-size-small);
+        color: var(--gray-medium);
+        margin-bottom: var(--space-md);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: var(--space-md) var(--space-lg);
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-height: 48px;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary-color);
+      }
+
+      .btn-sm {
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--font-size-small);
+        min-height: auto;
+        width: 100%;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .container {
+          padding: var(--space-md);
+        }
+
+        .navbar {
+          flex-direction: column;
+          gap: var(--space-md);
+          text-align: center;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        .tabs {
+          flex-direction: column;
+        }
+
+        .tab-btn {
+          border-bottom: 2px solid transparent;
+          border-left: 3px solid transparent;
+          padding: var(--space-md) var(--space-md) var(--space-md)
+            var(--space-lg);
+        }
+
+        .tab-btn.active {
+          border-left-color: var(--primary-color);
+          border-bottom-color: transparent;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: var(--space-sm);
+        }
+
+        .evaluation-card {
+          padding: var(--space-md);
+        }
+
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="navbar-brand">🎯 PerformAI</div>
+      <div class="navbar-user">
+        <span>Mi Evaluación</span>
+        <div class="user-avatar">MG</div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <h1>Mi Panel</h1>
+
+      <!-- ALERT -->
+      <div class="alert">
+        <div class="alert-title">✓ Tienes una evaluación pendiente</div>
+        <p>
+          Juan Rodríguez, tu líder, ha iniciado una evaluación 180°. Completa tu
+          autoevaluación para ver su feedback.
+        </p>
+      </div>
+
+      <!-- PENDING SELF-EVALUATION -->
+      <h2>Autoevaluación Pendiente</h2>
+      <div class="evaluation-card">
+        <h3>Completar autoevaluación</h3>
+        <p><strong>Evaluador:</strong> Juan Rodríguez (Líder)</p>
+        <div class="evaluation-info">
+          <span><strong>Tipo de Trabajador:</strong> Senior</span>
+          <span><strong>Período:</strong> Q2 2026</span>
+          <span><strong>Preguntas:</strong> 11 (6 base + 5 específicas)</span>
+          <span><strong>Tiempo estimado:</strong> 10-15 minutos</span>
+        </div>
+        <button class="btn">Comenzar Autoevaluación</button>
+      </div>
+
+      <!-- TABS -->
+      <h2>Mi Historial</h2>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab(event, 'reports')">
+          Mis Reportes
+        </button>
+        <button class="tab-btn" onclick="switchTab(event, 'history')">
+          Historial Completo
+        </button>
+      </div>
+
+      <!-- TAB: REPORTS -->
+      <div id="reports" class="tab-content active">
+        <div class="reports-grid">
+          <div class="report-item">
+            <h3>Reporte Q1 2026</h3>
+            <div class="report-item-meta">
+              <span><strong>Evaluador:</strong> Juan Rodríguez</span>
+              <span><strong>Tipo:</strong> Senior</span>
+              <span><strong>Completado:</strong> 15 Mar 2026</span>
+            </div>
+            <button class="btn btn-sm">Ver Reporte</button>
+          </div>
+
+          <div class="report-item">
+            <h3>Reporte Q4 2025</h3>
+            <div class="report-item-meta">
+              <span><strong>Evaluador:</strong> Juan Rodríguez</span>
+              <span><strong>Tipo:</strong> Senior</span>
+              <span><strong>Completado:</strong> 10 Dec 2025</span>
+            </div>
+            <button class="btn btn-sm">Ver Reporte</button>
+          </div>
+
+          <div class="report-item">
+            <h3>Reporte Q3 2025</h3>
+            <div class="report-item-meta">
+              <span><strong>Evaluador:</strong> Juan Rodríguez</span>
+              <span><strong>Tipo:</strong> Senior</span>
+              <span><strong>Completado:</strong> 05 Sep 2025</span>
+            </div>
+            <button class="btn btn-sm">Ver Reporte</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: HISTORY -->
+      <div id="history" class="tab-content">
+        <div
+          style="
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+          "
+        >
+          <table style="width: 100%; border-collapse: collapse">
+            <thead>
+              <tr
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    var(--primary-color),
+                    var(--secondary-color)
+                  );
+                  color: var(--white);
+                "
+              >
+                <th
+                  style="
+                    padding: var(--space-md);
+                    text-align: left;
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Período
+                </th>
+                <th
+                  style="
+                    padding: var(--space-md);
+                    text-align: left;
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Evaluador
+                </th>
+                <th
+                  style="
+                    padding: var(--space-md);
+                    text-align: left;
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Fecha Completado
+                </th>
+                <th
+                  style="
+                    padding: var(--space-md);
+                    text-align: left;
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Acción
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Q1 2026
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Juan Rodríguez
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  15 Mar 2026
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  <button class="btn btn-sm">Ver</button>
+                </td>
+              </tr>
+              <tr style="background: var(--gray-light)">
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Q4 2025
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Juan Rodríguez
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  10 Dec 2025
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  <button class="btn btn-sm">Ver</button>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Q3 2025
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  Juan Rodríguez
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  05 Sep 2025
+                </td>
+                <td
+                  style="
+                    padding: var(--space-md);
+                    border-bottom: 1px solid #eee;
+                  "
+                >
+                  <button class="btn btn-sm">Ver</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function switchTab(event, tabName) {
+        // Hide all tabs
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // Remove active class from all buttons
+        document.querySelectorAll(".tab-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Show selected tab
+        document.getElementById(tabName).classList.add("active");
+
+        // Add active class to clicked button
+        event.target.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

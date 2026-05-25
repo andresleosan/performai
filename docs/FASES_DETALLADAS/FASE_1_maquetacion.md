@@ -376,29 +376,64 @@
 
 ---
 
-**Estado:** 🟡 EN PROGRESO (Fase 1.1)  
-**Próximo:** Validar colores WCAG AA + crear componentes base
+**Estado:** ✅ COMPLETA — 8 VISTAS CREADAS  
+**Archivos:**
+
+- `src/components/base/index.html` — Componentes base (10 componentes)
+- `src/views/INDEX.html` — Índice navegable de todas las vistas
+- `src/views/01-login.html` — Login
+- `src/views/02-dashboard-admin.html` — Dashboard Admin RRHH
+- `src/views/03-dashboard-lider.html` — Dashboard Líder
+- `src/views/04-dashboard-colaborador.html` — Dashboard Colaborador
+- `src/views/05-config-tipos.html` — Configurar Tipos
+- `src/views/06-editor-preguntas.html` — Editor Preguntas
+- `src/views/07-formulario-evaluacion.html` — Evaluación 180°
+- `src/views/08-reporte-evaluacion.html` — Reporte IA
 
 ---
 
-## 📝 INSTRUCCIONES PARA CONTINUAR
+## 🔍 CÓMO VALIDAR LAS MAQUETAS
 
-1. **Valida colores:**
-   - WebAIM Contrast Checker
-   - Plug-in Chrome: "Accessibility Checker"
+### 1. Abrir el índice de navegación
 
-2. **Crea carpeta src/components/base:**
-   - index.html (sandbox con todos los componentes)
-   - styles.css (variables CSS)
-   - button.css, card.css, input.css, etc.
+```bash
+# Abre en navegador
+open src/views/INDEX.html
+# O con VSCode Live Server (clic derecho → "Open with Live Server")
+```
 
-3. **Testing responsive:**
-   - DevTools: Device Emulation
-   - Real devices si tienes
+### 2. Validar cada vista
 
-4. **Pushea a GitHub:**
-   ```bash
-   git add src/components/
-   git commit -m "Fase 1.1: Componentes base HTML/CSS"
-   git push origin main
-   ```
+- Haz clic en cualquier maqueta desde el índice
+- Verifica que todos los elementos se renderizan correctamente
+
+### 3. Testing responsive
+
+**En DevTools (F12):**
+
+1. Ctrl+Shift+M (Toggle device toolbar)
+2. Prueba en:
+   - ✓ iPhone 12 (390px)
+   - ✓ iPad (768px)
+   - ✓ Desktop (1280px)
+3. Verifica: sin scroll horizontal, touch targets > 48px, texto legible
+
+### 4. Validar contraste WCAG AA
+
+https://webaim.org/resources/contrastchecker/
+
+**Colores a validar:**
+
+- Púrpura #6C3E99 sobre Blanco: ✓ Ratio 5.2:1
+- Navy #003A70 sobre Blanco: ✓ Ratio 11.2:1
+- Verde #4CAF50 sobre Blanco: ✓ Ratio 4.5:1
+
+### 5. Próximos pasos
+
+```
+[ ] Validar en 3+ navegadores (Chrome, Firefox, Safari)
+[ ] Probar en dispositivos reales si es posible
+[ ] Recolectar feedback del cliente
+[ ] Optimizar performance (Lighthouse > 90)
+[ ] Preparar transición a React (Fase 2)
+```

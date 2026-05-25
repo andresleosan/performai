@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PerformAI - Configuración de Tipos</title>
+    <style>
+      :root {
+        --primary-color: #6c3e99;
+        --secondary-color: #003a70;
+        --white: #ffffff;
+        --gray-light: #f5f5f5;
+        --gray-medium: #9e9e9e;
+        --success-color: #4caf50;
+        --danger-color: #e74c3c;
+
+        --font-primary: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        --font-size-base: 16px;
+        --font-size-small: 14px;
+        --font-size-h3: 20px;
+        --font-size-h2: 24px;
+
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+
+        --radius-md: 8px;
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-base);
+        line-height: 1.6;
+        color: #000;
+        background: var(--gray-light);
+      }
+
+      /* HEADER */
+      .navbar {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+        color: var(--white);
+        padding: var(--space-md) var(--space-lg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow-md);
+      }
+
+      .navbar-brand {
+        font-size: var(--font-size-h3);
+        font-weight: bold;
+      }
+
+      /* CONTAINER */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: var(--space-lg);
+      }
+
+      .breadcrumb {
+        display: flex;
+        gap: var(--space-sm);
+        align-items: center;
+        margin-bottom: var(--space-lg);
+        font-size: var(--font-size-small);
+        color: var(--gray-medium);
+      }
+
+      .breadcrumb a {
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      h1 {
+        color: var(--secondary-color);
+        margin-bottom: var(--space-lg);
+        font-size: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: var(--font-size-h2);
+        margin: var(--space-lg) 0 var(--space-md);
+      }
+
+      /* BUTTON */
+      .btn {
+        display: inline-block;
+        padding: var(--space-md) var(--space-lg);
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-height: 48px;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary-color);
+      }
+
+      .btn-sm {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--font-size-small);
+        min-height: auto;
+      }
+
+      .btn-danger {
+        background-color: var(--danger-color);
+      }
+
+      /* TABLE */
+      .table-container {
+        background: var(--white);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        overflow-x: auto;
+        margin-bottom: var(--space-xl);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: var(--white);
+      }
+
+      th,
+      td {
+        padding: var(--space-md);
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      tbody tr:hover {
+        background: var(--gray-light);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: 4px;
+        font-size: var(--font-size-small);
+        font-weight: 600;
+      }
+
+      .badge-fixed {
+        background-color: #e0e0e0;
+        color: #424242;
+      }
+
+      .badge-custom {
+        background-color: var(--primary-color);
+        color: var(--white);
+      }
+
+      /* SECTION */
+      .section {
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        margin-bottom: var(--space-lg);
+      }
+
+      .section-title {
+        color: var(--secondary-color);
+        font-size: var(--font-size-h3);
+        margin-bottom: var(--space-md);
+        padding-bottom: var(--space-md);
+        border-bottom: 2px solid var(--gray-light);
+      }
+
+      .info-box {
+        background: #e8f5e9;
+        border-left: 4px solid var(--success-color);
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-md);
+        font-size: var(--font-size-small);
+      }
+
+      /* ACTIONS */
+      .actions {
+        display: flex;
+        gap: var(--space-sm);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .container {
+          padding: var(--space-md);
+        }
+
+        .navbar {
+          flex-direction: column;
+          gap: var(--space-md);
+          text-align: center;
+        }
+
+        h1 {
+          flex-direction: column;
+          gap: var(--space-md);
+          align-items: flex-start;
+        }
+
+        table {
+          font-size: var(--font-size-small);
+        }
+
+        th,
+        td {
+          padding: var(--space-sm);
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+
+        .btn-sm {
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: var(--space-sm);
+        }
+
+        .section {
+          padding: var(--space-md);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="navbar-brand">🎯 PerformAI</div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="#/">Dashboard</a>
+        <span>›</span>
+        <span>Configuración</span>
+      </div>
+
+      <h1>
+        Tipos de Trabajador
+        <button class="btn">+ Crear Tipo</button>
+      </h1>
+
+      <!-- INFO BOX -->
+      <div class="info-box">
+        ℹ️ Los tipos fijos (Gerente, Senior, Junior, Pasante) no se pueden
+        eliminar. Puedes crear tipos personalizados en la sección "Tipos
+        Personalizados".
+      </div>
+
+      <!-- FIXED TYPES -->
+      <div class="section">
+        <div class="section-title">Tipos Fijos (Sistema)</div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Evaluaciones</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Gerente</strong></td>
+                <td>Personal en rol de dirección</td>
+                <td><span class="badge badge-fixed">Fijo</span></td>
+                <td>8</td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-sm">Ver</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Senior</strong></td>
+                <td>Profesionales con experiencia</td>
+                <td><span class="badge badge-fixed">Fijo</span></td>
+                <td>15</td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-sm">Ver</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Junior</strong></td>
+                <td>Profesionales en desarrollo</td>
+                <td><span class="badge badge-fixed">Fijo</span></td>
+                <td>6</td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-sm">Ver</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Pasante</strong></td>
+                <td>Estudiantes en formación</td>
+                <td><span class="badge badge-fixed">Fijo</span></td>
+                <td>3</td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-sm">Ver</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CUSTOM TYPES -->
+      <div class="section">
+        <div class="section-title">Tipos Personalizados</div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Creado</th>
+                <th>Evaluaciones</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Consultor</strong></td>
+                <td>Consultores externos</td>
+                <td>10 Mar 2026</td>
+                <td>2</td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-sm">Editar</button>
+                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Contratista</strong></td>
+                <td>Personal por proyecto</td>
+                <td>05 Feb 2026</td>
+                <td>1</td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-sm">Editar</button>
+                    <button class="btn btn-sm btn-danger">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button class="btn" style="margin-top: var(--space-md)">
+          + Crear Tipo Personalizado
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

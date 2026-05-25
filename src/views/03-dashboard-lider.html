@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PerformAI - Dashboard Líder</title>
+    <style>
+      :root {
+        --primary-color: #6c3e99;
+        --secondary-color: #003a70;
+        --white: #ffffff;
+        --gray-light: #f5f5f5;
+        --gray-medium: #9e9e9e;
+        --success-color: #4caf50;
+        --warning-color: #ff9800;
+        --danger-color: #e74c3c;
+
+        --font-primary: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        --font-size-base: 16px;
+        --font-size-small: 14px;
+        --font-size-h3: 20px;
+        --font-size-h2: 24px;
+
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+
+        --radius-md: 8px;
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-base);
+        line-height: 1.6;
+        color: #000;
+        background: var(--gray-light);
+      }
+
+      /* HEADER */
+      .navbar {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+        color: var(--white);
+        padding: var(--space-md) var(--space-lg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow-md);
+      }
+
+      .navbar-brand {
+        font-size: var(--font-size-h3);
+        font-weight: bold;
+      }
+
+      .navbar-user {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      /* CONTAINER */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: var(--space-lg);
+      }
+
+      h1 {
+        color: var(--secondary-color);
+        margin-bottom: var(--space-lg);
+        font-size: 28px;
+      }
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: var(--font-size-h2);
+        margin: var(--space-lg) 0 var(--space-md);
+      }
+
+      /* ALERT */
+      .alert {
+        background: #fff3cd;
+        border-left: 4px solid var(--warning-color);
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--space-lg);
+        color: #856404;
+      }
+
+      .alert-title {
+        font-weight: 600;
+        margin-bottom: var(--space-sm);
+      }
+
+      /* PENDING CARD */
+      .pending-card {
+        background: var(--white);
+        border-left: 4px solid var(--warning-color);
+        padding: var(--space-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        margin-bottom: var(--space-lg);
+      }
+
+      .pending-card h3 {
+        color: var(--secondary-color);
+        margin-bottom: var(--space-sm);
+      }
+
+      .pending-card p {
+        color: var(--gray-medium);
+        margin-bottom: var(--space-md);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: var(--space-sm) var(--space-md);
+        background-color: var(--primary-color);
+        color: var(--white);
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        min-height: 48px;
+        padding: var(--space-md) var(--space-lg);
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .btn-secondary {
+        background-color: var(--secondary-color);
+      }
+
+      /* TEAM TABLE */
+      .table-container {
+        background: var(--white);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        overflow-x: auto;
+        margin-bottom: var(--space-xl);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: var(--white);
+      }
+
+      th,
+      td {
+        padding: var(--space-md);
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      tbody tr:hover {
+        background: var(--gray-light);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: 4px;
+        font-size: var(--font-size-small);
+        font-weight: 600;
+      }
+
+      .badge-pending {
+        background-color: #ffe0b2;
+        color: #e65100;
+      }
+
+      .badge-completed {
+        background-color: var(--success-color);
+        color: var(--white);
+      }
+
+      .badge-in-progress {
+        background-color: #e3f2fd;
+        color: #1565c0;
+      }
+
+      .btn-sm {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--font-size-small);
+        min-height: auto;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .container {
+          padding: var(--space-md);
+        }
+
+        .navbar {
+          flex-direction: column;
+          gap: var(--space-md);
+          text-align: center;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        table {
+          font-size: var(--font-size-small);
+        }
+
+        th,
+        td {
+          padding: var(--space-sm);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: var(--space-sm);
+        }
+
+        .pending-card {
+          padding: var(--space-md);
+        }
+
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="navbar-brand">🎯 PerformAI</div>
+      <div class="navbar-user">
+        <span>Líder de Equipo</span>
+        <div class="user-avatar">JR</div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <h1>Mi Panel de Control</h1>
+
+      <!-- ALERT -->
+      <div class="alert">
+        <div class="alert-title">⚠️ Tienes evaluaciones por completar</div>
+        <p>3 colaboradores esperan tu evaluación para esta semana.</p>
+      </div>
+
+      <!-- PENDING EVALUATIONS -->
+      <h2>Evaluaciones Pendientes</h2>
+      <div class="pending-card">
+        <h3>Evaluar a María García</h3>
+        <p><strong>Tipo:</strong> Senior | <strong>Período:</strong> Q2 2026</p>
+        <p>Última actualización: 22 de mayo de 2026</p>
+        <button class="btn">Iniciar Evaluación</button>
+      </div>
+
+      <!-- MY TEAM -->
+      <h2>Mi Equipo</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Colaborador</th>
+              <th>Tipo</th>
+              <th>Estado Actual</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>María García</td>
+              <td>Senior</td>
+              <td>
+                <span class="badge badge-pending">Esperando evaluación</span>
+              </td>
+              <td><button class="btn btn-sm">Evaluar</button></td>
+            </tr>
+            <tr>
+              <td>Carlos López</td>
+              <td>Junior</td>
+              <td>
+                <span class="badge badge-in-progress"
+                  >Tu evaluación enviada</span
+                >
+              </td>
+              <td><button class="btn btn-sm">Ver</button></td>
+            </tr>
+            <tr>
+              <td>Ana Pérez</td>
+              <td>Pasante</td>
+              <td><span class="badge badge-completed">Completado</span></td>
+              <td><button class="btn btn-sm">Reporte</button></td>
+            </tr>
+            <tr>
+              <td>Diego Ruiz</td>
+              <td>Senior</td>
+              <td>
+                <span class="badge badge-pending">Esperando evaluación</span>
+              </td>
+              <td><button class="btn btn-sm">Evaluar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- MY REPORTS -->
+      <h2>Mis Reportes Recientes</h2>
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: var(--space-md);
+        "
+      >
+        <div
+          style="
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+          "
+        >
+          <h3
+            style="
+              color: var(--secondary-color);
+              margin-bottom: var(--space-sm);
+            "
+          >
+            Ana Pérez
+          </h3>
+          <p
+            style="
+              font-size: var(--font-size-small);
+              color: var(--gray-medium);
+              margin-bottom: var(--space-md);
+            "
+          >
+            Pasante | 15 May 2026
+          </p>
+          <button class="btn btn-sm">Ver Reporte</button>
+        </div>
+        <div
+          style="
+            background: var(--white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+          "
+        >
+          <h3
+            style="
+              color: var(--secondary-color);
+              margin-bottom: var(--space-sm);
+            "
+          >
+            Luis Martínez
+          </h3>
+          <p
+            style="
+              font-size: var(--font-size-small);
+              color: var(--gray-medium);
+              margin-bottom: var(--space-md);
+            "
+          >
+            Junior | 08 May 2026
+          </p>
+          <button class="btn btn-sm">Ver Reporte</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

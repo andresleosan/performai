@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PerformAI - Dashboard Admin RRHH</title>
+    <style>
+      :root {
+        --primary-color: #6c3e99;
+        --secondary-color: #003a70;
+        --white: #ffffff;
+        --gray-light: #f5f5f5;
+        --gray-medium: #9e9e9e;
+        --success-color: #4caf50;
+        --danger-color: #e74c3c;
+
+        --font-primary: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        --font-size-base: 16px;
+        --font-size-small: 14px;
+        --font-size-h3: 20px;
+        --font-size-h2: 24px;
+
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+
+        --radius-md: 8px;
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-primary);
+        font-size: var(--font-size-base);
+        line-height: 1.6;
+        color: #000;
+        background: var(--gray-light);
+      }
+
+      /* HEADER / NAVBAR */
+      .navbar {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-color),
+          var(--primary-color)
+        );
+        color: var(--white);
+        padding: var(--space-md) var(--space-lg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow-md);
+      }
+
+      .navbar-brand {
+        font-size: var(--font-size-h3);
+        font-weight: bold;
+      }
+
+      .navbar-user {
+        display: flex;
+        align-items: center;
+        gap: var(--space-md);
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      .navbar-menu {
+        background: rgba(0, 0, 0, 0.1);
+        padding: var(--space-sm);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+      }
+
+      /* CONTAINER */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: var(--space-lg);
+      }
+
+      h1 {
+        color: var(--secondary-color);
+        margin-bottom: var(--space-lg);
+        font-size: 28px;
+      }
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: var(--font-size-h2);
+        margin: var(--space-lg) 0 var(--space-md);
+      }
+
+      /* STATS GRID */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-md);
+        margin-bottom: var(--space-xl);
+      }
+
+      .stat-card {
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 32px;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: var(--space-sm);
+      }
+
+      .stat-label {
+        font-size: var(--font-size-small);
+        color: var(--gray-medium);
+        text-transform: uppercase;
+      }
+
+      /* ACTIONS GRID */
+      .actions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-md);
+        margin-bottom: var(--space-xl);
+      }
+
+      .action-card {
+        background: var(--white);
+        padding: var(--space-lg);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .action-card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+      }
+
+      .action-icon {
+        font-size: 32px;
+        margin-bottom: var(--space-md);
+      }
+
+      .action-title {
+        color: var(--secondary-color);
+        font-weight: 600;
+        margin-bottom: var(--space-sm);
+      }
+
+      .action-desc {
+        font-size: var(--font-size-small);
+        color: var(--gray-medium);
+      }
+
+      /* TABLE */
+      .table-container {
+        background: var(--white);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: var(--white);
+      }
+
+      th,
+      td {
+        padding: var(--space-md);
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+
+      tbody tr:hover {
+        background: var(--gray-light);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: 4px;
+        font-size: var(--font-size-small);
+        font-weight: 600;
+      }
+
+      .badge-purple {
+        background-color: var(--primary-color);
+        color: var(--white);
+      }
+
+      .badge-green {
+        background-color: var(--success-color);
+        color: var(--white);
+      }
+
+      .badge-gray {
+        background-color: var(--gray-light);
+        color: var(--gray-medium);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .container {
+          padding: var(--space-md);
+        }
+
+        .navbar {
+          flex-direction: column;
+          gap: var(--space-md);
+          text-align: center;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        table {
+          font-size: var(--font-size-small);
+        }
+
+        th,
+        td {
+          padding: var(--space-sm);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: var(--space-sm);
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .actions-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="navbar-brand">🎯 PerformAI</div>
+      <div class="navbar-user">
+        <span>Admin RRHH</span>
+        <div class="user-avatar">AR</div>
+        <div class="navbar-menu">⋮</div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <h1>Dashboard Administrativo</h1>
+
+      <!-- STATS -->
+      <h2>Resumen</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">42</div>
+          <div class="stat-label">Evaluaciones Completas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">8</div>
+          <div class="stat-label">En Progreso</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Tipos de Trabajador</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Ciclos Activos</div>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <h2>Acciones Rápidas</h2>
+      <div class="actions-grid">
+        <div class="action-card">
+          <div class="action-icon">⚙️</div>
+          <div class="action-title">Configurar Tipos</div>
+          <div class="action-desc">Gestionar tipos de trabajador</div>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">❓</div>
+          <div class="action-title">Editar Preguntas</div>
+          <div class="action-desc">Crear y modificar preguntas</div>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">📅</div>
+          <div class="action-title">Ciclos Evaluativos</div>
+          <div class="action-desc">Gestionar períodos</div>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">📊</div>
+          <div class="action-title">Ver Reportes</div>
+          <div class="action-desc">Análisis ejecutivo</div>
+        </div>
+      </div>
+
+      <!-- RECENT ACTIVITY -->
+      <h2>Actividad Reciente</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Evaluador</th>
+              <th>Colaborador</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Juan Rodríguez</td>
+              <td>María García</td>
+              <td><span class="badge badge-purple">Senior</span></td>
+              <td><span class="badge badge-green">Completado</span></td>
+              <td>22 May 2026</td>
+            </tr>
+            <tr>
+              <td>Laura Martínez</td>
+              <td>Carlos López</td>
+              <td><span class="badge badge-purple">Junior</span></td>
+              <td><span class="badge badge-green">Completado</span></td>
+              <td>21 May 2026</td>
+            </tr>
+            <tr>
+              <td>Pedro Sánchez</td>
+              <td>Ana Pérez</td>
+              <td><span class="badge badge-purple">Pasante</span></td>
+              <td><span class="badge badge-gray">Pendiente</span></td>
+              <td>20 May 2026</td>
+            </tr>
+            <tr>
+              <td>Juan Rodríguez</td>
+              <td>Diego Ruiz</td>
+              <td><span class="badge badge-purple">Gerente</span></td>
+              <td><span class="badge badge-gray">Pendiente</span></td>
+              <td>19 May 2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
