@@ -22,8 +22,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Sincronizar con Firebase Auth
+  // Sincronizar con Firebase Auth + localStorage
   useEffect(() => {
+    // Primero, verificar si hay usuario en localStorage (para mock auth)
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        setUser(user);
+        setIsLoading(false);
+        return;
+      } catch (error) {
+        console.error('Error parsing stored user:', error);
+      }
+    }
+
+    // Si no hay en localStorage, escuchar cambios de Firebase
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
@@ -58,8 +72,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           localStorage.setItem('user', JSON.stringify(tempUser));
         }
       } else {
-        setUser(null);
-        localStorage.removeItem('user');
+        // Solo limpiar si no hay usuario en localStorage
+        if (!localStorage.getItem('user')) {
+          setUser(null);
+        }
       }
       setIsLoading(false);
     });
