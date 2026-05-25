@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar } from '@/components/common';
 import { Sidebar } from './Sidebar';
 import type { User } from '@/types';
@@ -19,12 +19,16 @@ export interface AppLayoutProps {
  * </AppLayout>
  */
 export const AppLayout: React.FC<AppLayoutProps> = ({ children, user, onLogout }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => setIsSidebarOpen((s) => !s);
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar user={user} onLogout={onLogout} />
+      <Navbar user={user} onLogout={onLogout} onToggleSidebar={toggleSidebar} />
       <div className="flex flex-1">
-        <Sidebar />
-        <main className="flex-1 ml-64 pt-4 px-6 overflow-auto bg-gray-50 text-gray-900">
+        <Sidebar isOpen={isSidebarOpen} onToggle={toggleSidebar} />
+        <main className={`flex-1 ${isSidebarOpen ? 'ml-64' : 'ml-20'} pt-16 px-6 overflow-auto bg-gray-50 text-gray-900`}>
           {children}
         </main>
       </div>

@@ -8,6 +8,7 @@ export interface NavbarProps {
   onLogout?: () => void;
   logo?: string;
   title?: string;
+  onToggleSidebar?: () => void;
 }
 
 /**
@@ -26,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onLogout,
   logo,
   title = 'PerformAI',
+  onToggleSidebar,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -49,6 +51,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex justify-between items-center h-16">
           {/* Logo Section */}
           <div className="flex items-center gap-2">
+            {/* Sidebar toggle for desktop */}
+            {typeof onToggleSidebar === 'function' && (
+              <button onClick={onToggleSidebar} className="mr-2 p-2 rounded hover:bg-white/10 hidden md:inline-block">
+                ☰
+              </button>
+            )}
             {logo && <img src={logo} alt={title} className="h-8 w-8" />}
             <h1 className="text-xl font-bold">{title}</h1>
           </div>
