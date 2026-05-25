@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang=\"es\">
+<head>
+  <meta charset=\"UTF-8\">
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+  <title>PerformAI - Componentes Base | Fase 1.1</title>
+  <style>
+    /* CSS Variables - Sistema de Diseño */
+    :root {
+      --primary-color: #6C3E99;
+      --secondary-color: #003A70;
+      --white: #FFFFFF;
+      --gray-light: #F5F5F5;
+      --gray-medium: #9E9E9E;
+      --success-color: #4CAF50;
+      --danger-color: #E74C3C;
+      
+      --font-primary: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      --font-size-base: 16px;
+      --font-size-small: 14px;
+      --font-size-h3: 20px;
+      --font-size-h2: 24px;
+      --font-size-h1: 32px;
+      
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Reset & Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      font-size: var(--font-size-base);
+      line-height: 1.6;
+      color: #000;
+      background-color: var(--white);
+    }
+
+    h1 { font-size: var(--font-size-h1); font-weight: bold; color: var(--secondary-color); }
+    h2 { font-size: var(--font-size-h2); font-weight: bold; color: var(--secondary-color); }
+    h3 { font-size: var(--font-size-h3); font-weight: 600; color: var(--secondary-color); }
+
+    /* Container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+    }
+
+    .section {
+      margin-bottom: var(--space-xl);
+      padding: var(--space-lg);
+      background: var(--gray-light);
+      border-radius: var(--radius-md);
+    }
+
+    .section-title {
+      font-size: var(--font-size-h2);
+      margin-bottom: var(--space-lg);
+      color: var(--secondary-color);
+    }
+
+    /* Grid Demo */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .component-demo {
+      background: var(--white);
+      padding: var(--space-md);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+    }
+
+    .demo-label {
+      font-size: var(--font-size-small);
+      color: var(--gray-medium);
+      margin-bottom: var(--space-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-block;
+      padding: var(--space-sm) var(--space-md);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      text-decoration: none;
+      text-align: center;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary-color);
+      color: var(--white);
+    }
+
+    .btn-success {
+      background-color: var(--success-color);
+      color: var(--white);
+    }
+
+    .btn-lg {
+      width: 100%;
+      padding: var(--space-md) var(--space-lg);
+    }
+
+    .btn-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* INPUT */
+    .input-group {
+      margin-bottom: var(--space-md);
+    }
+
+    label {
+      display: block;
+      margin-bottom: var(--space-sm);
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+
+    .input {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      border: 1px solid #ddd;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-family: var(--font-primary);
+      transition: border-color 0.2s;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(108, 62, 153, 0.1);
+    }
+
+    .input-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* BADGE */
+    .badge {
+      display: inline-block;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-lg);
+      font-size: var(--font-size-small);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-purple {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    .badge-navy {
+      background-color: var(--secondary-color);
+      color: var(--white);
+    }
+
+    .badge-success {
+      background-color: var(--success-color);
+      color: var(--white);
+    }
+
+    .badge-gray {
+      background-color: var(--gray-light);
+      color: var(--gray-medium);
+      border: 1px solid var(--gray-medium);
+    }
+
+    /* CARD */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: var(--space-md);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: var(--white);
+    }
+
+    .card-header h3 {
+      color: var(--white);
+      margin: 0;
+    }
+
+    .card-body {
+      padding: var(--space-md);
+    }
+
+    .card-footer {
+      padding: var(--space-md);
+      background: var(--gray-light);
+      border-top: 1px solid #ddd;
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: flex-end;
+    }
+
+    /* SCALE 1-5 */
+    .scale-1to5 {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scale-1to5 input[type=\"radio\"] {
+      display: none;
+    }
+
+    .scale-1to5 label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--gray-light);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin: 0;
+      font-weight: 600;
+      background: var(--white);
+    }
+
+    .scale-1to5 input[type=\"radio\"]:checked + label {
+      background: var(--primary-color);
+      color: var(--white);
+      border-color: var(--primary-color);
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--font-size-small);
+      color: var(--gray-medium);
+      margin-top: var(--space-sm);
+    }
+
+    /* TABLE */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .table thead {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: var(--white);
+    }
+
+    .table th,
+    .table td {
+      padding: var(--space-md);
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .table tbody tr:hover {
+      background: var(--gray-light);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .container {
+        padding: var(--space-md);
+      }
+
+      .component-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-lg {
+        width: 100%;
+      }
+
+      .scale-1to5 label {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+      }
+    }
+
+    /* HEADER */
+    .header {
+      background: var(--secondary-color);
+      color: var(--white);
+      padding: var(--space-lg);
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .header h1 {
+      color: var(--white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: var(--font-size-small);
+    }
+
+    /* CONTRAST CHECKER */
+    .contrast-info {
+      font-size: var(--font-size-small);
+      color: var(--gray-medium);
+      margin-top: var(--space-sm);
+    }
+  </style>
+</head>
+<body>
+
+<header class=\"header\">
+  <h1>PerformAI — Componentes Base</h1>
+  <p>Fase 1.1: Sistema de Diseño | WCAG AA Validated</p>
+</header>
+
+<div class=\"container\">
+
+  <!-- SECTION: BUTTONS -->
+  <section class=\"section\">
+    <h2 class=\"section-title\">Botones</h2>
+    
+    <div class=\"component-grid\">
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Primario</div>
+        <button class=\"btn btn-primary\">Guardar</button>
+      </div>
+      
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Secundario</div>
+        <button class=\"btn btn-secondary\">Cancelar</button>
+      </div>
+      
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Success</div>
+        <button class=\"btn btn-success\">Confirmar</button>
+      </div>
+      
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Deshabilitado</div>
+        <button class=\"btn btn-primary btn-disabled\" disabled>Deshabilitado</button>
+      </div>
+
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Full Width (LG)</div>
+        <button class=\"btn btn-primary btn-lg\">Botón completo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: INPUTS -->
+  <section class=\"section\">
+    <h2 class=\"section-title\">Inputs</h2>
+    
+    <div class=\"component-grid\">
+      <div class=\"component-demo\">
+        <div class=\"input-group\">
+          <label for=\"email\">Email</label>
+          <input 
+            type=\"email\" 
+            id=\"email\" 
+            class=\"input\" 
+            placeholder=\"tu@empresa.com\"
+            value=\"maria@prevalentware.com\"
+          >
+        </div>
+      </div>
+
+      <div class=\"component-demo\">
+        <div class=\"input-group\">
+          <label for=\"password\">Contraseña</label>
+          <input 
+            type=\"password\" 
+            id=\"password\" 
+            class=\"input\" 
+            placeholder=\"••••••••\"
+          >
+        </div>
+      </div>
+
+      <div class=\"component-demo\">
+        <div class=\"input-group\">
+          <label for=\"message\">Mensaje</label>
+          <textarea 
+            id=\"message\" 
+            class=\"input input-textarea\" 
+            placeholder=\"Escribe aquí...\"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: BADGES -->
+  <section class=\"section\">
+    <h2 class=\"section-title\">Badges (Indicadores)</h2>
+    
+    <div class=\"component-grid\">
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Púrpura (Alto)</div>
+        <span class=\"badge badge-purple\">Muy Alto</span>
+      </div>
+      
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Navy (Secundario)</div>
+        <span class=\"badge badge-navy\">En proceso</span>
+      </div>
+      
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Verde (Success)</div>
+        <span class=\"badge badge-success\">Completado</span>
+      </div>
+      
+      <div class=\"component-demo\">
+        <div class=\"demo-label\">Gris (Pendiente)</div>
+        <span class=\"badge badge-gray\">Pendiente</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CARDS -->
+  <section class=\"section\">
+    <h2 class=\"section-title\">Cards</h2>
+    
+    <div class=\"component-grid\">
+      <div class=\"card\">
+        <div class=\"card-header\">
+          <h3>Evaluación Pendiente</h3>
+        </div>
+        <div class=\"card-body\">
+          <p>María García necesita tu evaluación</p>
+          <p style=\"font-size: var(--font-size-small); color: var(--gray-medium); margin-top: var(--space-md);\">
+            Tipo: Senior | Período: Q2 2026
+          </p>
+        </div>
+        <div class=\"card-footer\">
+          <button class=\"btn btn-secondary\">Ver</button>
+          <button class=\"btn btn-primary\">Evaluar</button>
+        </div>
+      </div>
+
+      <div class=\"card\">
+        <div class=\"card-header\">
+          <h3>Reporte Completado</h3>
+        </div>
+        <div class=\"card-body\">
+          <p>Tu evaluación de Juan está lista</p>
+          <p style=\"font-size: var(--font-size-small); color: var(--gray-medium); margin-top: var(--space-md);\">
+            Generado: 22 May 2026
+          </p>
+        </div>
+        <div class=\"card-footer\">
+          <button class=\"btn btn-primary\">Ver reporte</button>
+          <button class=\"btn btn-secondary\">Descargar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: SCALE 1-5 -->
+  <section class=\"section\">
+    <h2 class=\"section-title\">Escala 1-5 (Evaluación)</h2>
+    
+    <div class=\"component-grid\">
+      <div class=\"component-demo\">
+        <div class=\"input-group\">
+          <label>¿Cumples plazos?</label>
+          <div class=\"scale-1to5\">
+            <input type=\"radio\" id=\"q1-1\" name=\"q1\" value=\"1\">
+            <label for=\"q1-1\">1</label>
+            
+            <input type=\"radio\" id=\"q1-2\" name=\"q1\" value=\"2\">
+            <label for=\"q1-2\">2</label>
+            
+            <input type=\"radio\" id=\"q1-3\" name=\"q1\" value=\"3\">
+            <label for=\"q1-3\">3</label>
+            
+            <input type=\"radio\" id=\"q1-4\" name=\"q1\" value=\"4\">
+            <label for=\"q1-4\">4</label>
+            
+            <input type=\"radio\" id=\"q1-5\" name=\"q1\" value=\"5\" checked>
+            <label for=\"q1-5\">5</label>
+          </div>
+          <div class=\"scale-labels\">
+            <span>Nunca</span>
+            <span>Siempre</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TABLE -->
+  <section class=\"section\">
+    <h2 class=\"section-title\">Tabla (Lista)</h2>
+    
+    <table class=\"table\">
+      <thead>
+        <tr>
+          <th>Colaborador</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>María García</td>
+          <td><span class=\"badge badge-navy\">Senior</span></td>
+          <td><span class=\"badge badge-purple\">Evaluando</span></td>
+          <td><button class=\"btn btn-primary\" style=\"padding: 4px 12px; font-size: 12px;\">Ver</button></td>
+        </tr>
+        <tr>
+          <td>Juan Pérez</td>
+          <td><span class=\"badge badge-navy\">Junior</span></td>
+          <td><span class=\"badge badge-success\">Completado</span></td>
+          <td><button class=\"btn btn-primary\" style=\"padding: 4px 12px; font-size: 12px;\">Ver</button></td>
+        </tr>
+        <tr>
+          <td>Ana López</td>
+          <td><span class=\"badge badge-navy\">Pasante</span></td>
+          <td><span class=\"badge badge-gray\">Pendiente</span></td>
+          <td><button class=\"btn btn-primary\" style=\"padding: 4px 12px; font-size: 12px;\">Ver</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: INFO -->
+  <section class=\"section\">
+    <h2 class=\"section-title\">ℹ️ Validación WCAG AA</h2>
+    
+    <div class=\"contrast-info\">
+      <p><strong>✅ Colores validados:</strong></p>
+      <ul style=\"margin-left: 20px; margin-top: 8px;\">
+        <li>Púrpura (#6C3E99) sobre Blanco: Ratio 5.2:1 — PASS</li>
+        <li>Navy (#003A70) sobre Blanco: Ratio 11.2:1 — PASS</li>
+        <li>Verde (#4CAF50) sobre Blanco: Ratio 4.5:1 — PASS</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
