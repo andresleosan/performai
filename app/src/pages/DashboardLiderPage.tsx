@@ -78,57 +78,61 @@ export const DashboardLiderPage: React.FC = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {pendingEvaluations.map((evaluation) => (
-              <Card 
+              <div
                 key={evaluation.id}
-                className={`border-2 cursor-pointer hover:shadow-lg transition-all ${
-                  selectedEval === evaluation.id 
-                    ? 'border-primary-500 bg-primary-50 shadow-md' 
-                    : 'border-gray-200 hover:border-primary-300'
-                }`}
+                className="cursor-pointer"
                 onClick={() => setSelectedEval(evaluation.id)}
               >
-                <CardBody>
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">{evaluation.colaborador}</h3>
-                      <p className="text-sm text-gray-600">{evaluation.rol}</p>
+                <Card
+                  className={`border-2 hover:shadow-lg transition-all ${
+                    selectedEval === evaluation.id
+                      ? 'border-primary-500 bg-primary-50 shadow-md'
+                      : 'border-gray-200 hover:border-primary-300'
+                  }`}
+                >
+                  <CardBody>
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">{evaluation.colaborador}</h3>
+                        <p className="text-sm text-gray-600">{evaluation.rol}</p>
+                      </div>
+                      <Badge color="navy">{evaluation.estado}</Badge>
                     </div>
-                    <Badge variant="navy">{evaluation.estado}</Badge>
-                  </div>
 
-                  <div className="grid grid-cols-2 gap-4 mb-4 py-4 border-y border-gray-200">
-                    <div>
-                      <p className="text-xs text-gray-500 font-bold">Departamento</p>
-                      <p className="text-sm font-semibold text-gray-700">{evaluation.departamento}</p>
+                    <div className="grid grid-cols-2 gap-4 mb-4 py-4 border-y border-gray-200">
+                      <div>
+                        <p className="text-xs text-gray-500 font-bold">Departamento</p>
+                        <p className="text-sm font-semibold text-gray-700">{evaluation.departamento}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500 font-bold">Fecha Límite</p>
+                        <p className="text-sm font-semibold text-gray-700">{evaluation.fecha}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs text-gray-500 font-bold">Fecha Límite</p>
-                      <p className="text-sm font-semibold text-gray-700">{evaluation.fecha}</p>
-                    </div>
-                  </div>
 
-                  <div className="mb-4">
-                    <div className="flex justify-between text-sm mb-2">
-                      <span className="text-gray-600">Progreso</span>
-                      <span className="font-bold text-primary-600">{evaluation.progreso}%</span>
+                    <div className="mb-4">
+                      <div className="flex justify-between text-sm mb-2">
+                        <span className="text-gray-600">Progreso</span>
+                        <span className="font-bold text-primary-600">{evaluation.progreso}%</span>
+                      </div>
+                      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-primary-600"
+                          style={{ width: `${evaluation.progreso}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-primary-600"
-                        style={{ width: `${evaluation.progreso}%` }}
-                      />
-                    </div>
-                  </div>
 
-                  <Button 
-                    variant="primary"
-                    fullWidth
-                    onClick={() => handleStartEvaluation(evaluation)}
-                  >
-                    Iniciar Evaluación
-                  </Button>
-                </CardBody>
-              </Card>
+                    <Button
+                      variant="primary"
+                      fullWidth
+                      onClick={() => handleStartEvaluation(evaluation)}
+                    >
+                      Iniciar Evaluación
+                    </Button>
+                  </CardBody>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
