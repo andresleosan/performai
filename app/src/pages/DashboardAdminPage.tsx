@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardBody, Button, Badge, Table } from '@/components/common';
+import { Card, CardBody, Badge, Table } from '@/components/common';
 import { AppLayout } from '@/components/layout';
 import { useAuth } from '@/contexts/AuthContext';
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardBody, Button, ProgressBar, Slider, Input } from '@/components/common';
+import { Card, CardBody, Button, ProgressBar, Slider } from '@/components/common';
 import { AppLayout } from '@/components/layout';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEvaluation } from '@/contexts/EvaluationContext';
@@ -10,7 +10,7 @@ import { useEvaluation } from '@/contexts/EvaluationContext';
  */
 export const EvaluacionFormularioPage: React.FC = () => {
   const { user, logout } = useAuth();
-  const { currentEvaluation, currentQuestionIndex, saveAnswer } = useEvaluation();
+  const { currentQuestionIndex, saveAnswer } = useEvaluation();
   const [justification, setJustification] = useState('');
   const [notApplicable, setNotApplicable] = useState(false);
 
@@ -26,7 +26,7 @@ export const EvaluacionFormularioPage: React.FC = () => {
   const progress = (answered / questions.length) * 100;
 
   const handleNext = () => {
-    saveAnswer(currentQuestion.id, { value: 3, justification });
+    saveAnswer(currentQuestion.id, { questionId: currentQuestion.id, value: 3, justification });
   };
 
   const handlePrevious = () => {
@@ -36,7 +36,7 @@ export const EvaluacionFormularioPage: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    saveAnswer(currentQuestion.id, { value: 3, justification });
+    saveAnswer(currentQuestion.id, { questionId: currentQuestion.id, value: 3, justification });
     alert('Evaluación completada');
   };
 
