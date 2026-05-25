@@ -56,7 +56,7 @@ export const Sidebar: React.FC = () => {
       {/* Sidebar */}
       <aside
         className={clsx(
-          'fixed left-0 top-16 h-[calc(100vh-64px)] bg-secondary-50 border-r border-gray-200 transition-all duration-300 z-40',
+          'fixed left-0 top-16 h-[calc(100vh-64px)] bg-white border-r-2 border-primary-100 shadow-sm transition-all duration-300 z-40',
           isOpen ? 'w-64' : 'w-20'
         )}
       >
@@ -68,8 +68,8 @@ export const Sidebar: React.FC = () => {
               className={clsx(
                 'w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-left group',
                 isActive(item.path)
-                  ? 'bg-primary-500 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-md'
+                  : 'text-gray-700 hover:bg-primary-50'
               )}
               title={item.label}
             >

@@ -36,7 +36,7 @@ export const EditorPreguntasPage: React.FC = () => {
     <AppLayout user={user} onLogout={logout}>
       <div className="px-4 py-8 max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-secondary-500">Editor de Preguntas</h1>
+          <h1 className="text-3xl font-bold text-primary-700">Editor de Preguntas</h1>
           <Button variant="primary" onClick={() => setShowModal(true)}>
             + Nueva Pregunta
           </Button>

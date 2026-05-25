@@ -7,7 +7,7 @@ import clsx from 'clsx';
  */
 export const Card: React.FC<CardProps> = ({ children, className }) => {
   return (
-    <div className={clsx('bg-white rounded-lg shadow-md overflow-hidden', className)}>
+    <div className={clsx('bg-white rounded-lg shadow-lg hover:shadow-xl border border-gray-100 overflow-hidden transition-shadow', className)}>
       {children}
     </div>
   );
@@ -18,7 +18,7 @@ export const Card: React.FC<CardProps> = ({ children, className }) => {
  */
 export const CardHeader: React.FC<CardHeaderProps> = ({ children, className }) => {
   return (
-    <div className={clsx('bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-4', className)}>
+    <div className={clsx('bg-gradient-to-r from-primary-600 via-primary-500 to-blue-400 text-white px-6 py-5 font-semibold', className)}>
       {children}
     </div>
   );

@@ -58,17 +58,23 @@ export const DashboardAdminPage: React.FC = () => {
   return (
     <AppLayout user={user} onLogout={logout}>
       <div className="px-4 py-8 max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-secondary-500 mb-8">Dashboard Administrativo</h1>
+        {/* Header */}
+        <div className="mb-10">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-primary-600 to-blue-500 bg-clip-text text-transparent mb-2">Dashboard Administrativo</h1>
+          <p className="text-lg text-gray-600">Gestiona y monitorea todas las evaluaciones de la plataforma</p>
+        </div>
 
         {/* Stats Section */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-secondary-500 mb-6">Resumen</h2>
+          <h2 className="text-3xl font-bold text-primary-700 mb-8 flex items-center gap-2">
+            <span className="text-2xl">📊</span> Resumen
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {stats.map((stat, idx) => (
-              <Card key={idx}>
+              <Card key={idx} className="border-2 border-primary-100 hover:border-primary-400 bg-gradient-to-br from-primary-50 to-primary-100 shadow-sm hover:shadow-md transition-all">
                 <CardBody className="text-center">
-                  <div className="text-3xl font-bold text-primary-600 mb-2">{stat.number}</div>
-                  <div className="text-sm text-gray-500 uppercase font-semibold">{stat.label}</div>
+                  <div className="text-5xl font-bold text-primary-600 mb-3">{stat.number}</div>
+                  <div className="text-base text-gray-700 font-semibold uppercase tracking-wide">{stat.label}</div>
                 </CardBody>
               </Card>
             ))}
@@ -77,14 +83,16 @@ export const DashboardAdminPage: React.FC = () => {
 
         {/* Actions Section */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-secondary-500 mb-6">Acciones Rápidas</h2>
+          <h2 className="text-3xl font-bold text-primary-700 mb-8 flex items-center gap-2">
+            <span className="text-2xl">⚡</span> Acciones Rápidas
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {actions.map((action, idx) => (
-              <Card key={idx} className="cursor-pointer hover:shadow-lg transition-shadow">
+              <Card key={idx} className="cursor-pointer hover:shadow-lg transition-all border-2 border-primary-100 hover:border-primary-300 bg-white">
                 <CardBody className="text-center">
-                  <div className="text-4xl mb-4">{action.icon}</div>
-                  <h3 className="font-semibold text-secondary-500 mb-2">{action.title}</h3>
-                  <p className="text-sm text-gray-500">{action.description}</p>
+                  <div className="text-5xl mb-4">{action.icon}</div>
+                  <h3 className="font-bold text-primary-700 mb-3 text-lg">{action.title}</h3>
+                  <p className="text-sm text-gray-600 font-medium">{action.description}</p>
                 </CardBody>
               </Card>
             ))}
@@ -93,8 +101,10 @@ export const DashboardAdminPage: React.FC = () => {
 
         {/* Activity Table */}
         <div>
-          <h2 className="text-2xl font-bold text-secondary-500 mb-6">Actividad Reciente</h2>
-          <Card>
+          <h2 className="text-3xl font-bold text-primary-700 mb-8 flex items-center gap-2">
+            <span className="text-2xl">📈</span> Actividad Reciente
+          </h2>
+          <Card className="border-2 border-primary-100 shadow-sm">
             <CardBody>
               <Table
                 columns={activityColumns.map((col) => ({

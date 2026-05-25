@@ -23,7 +23,7 @@ export const ConfigTiposPage: React.FC = () => {
     <AppLayout user={user} onLogout={logout}>
       <div className="px-4 py-8 max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-secondary-500">Configuración de Tipos</h1>
+          <h1 className="text-3xl font-bold text-primary-700">Configuración de Tipos</h1>
           <Button variant="primary" onClick={() => setShowModal(true)}>
             + Nuevo Tipo
           </Button>
@@ -31,7 +31,7 @@ export const ConfigTiposPage: React.FC = () => {
 
         {/* Fixed Types */}
         <div className="mb-8">
-          <h2 className="text-xl font-bold text-secondary-500 mb-4">Tipos Predefinidos</h2>
+          <h2 className="text-xl font-bold text-primary-700 mb-4">Tipos Predefinidos</h2>
           <Card>
             <CardBody>
               <Table
@@ -54,7 +54,7 @@ export const ConfigTiposPage: React.FC = () => {
 
         {/* Custom Types */}
         <div>
-          <h2 className="text-xl font-bold text-secondary-500 mb-4">Tipos Personalizados</h2>
+          <h2 className="text-xl font-bold text-primary-700 mb-4">Tipos Personalizados</h2>
           <Card>
             <CardBody>
               <Table

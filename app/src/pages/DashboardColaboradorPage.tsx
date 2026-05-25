@@ -33,26 +33,41 @@ export const DashboardColaboradorPage: React.FC = () => {
   return (
     <AppLayout user={user} onLogout={logout}>
       <div className="px-4 py-8 max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-secondary-500 mb-8">Mi Desempeño</h1>
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-primary-700 mb-2">Mi Desempeño</h1>
+          <p className="text-base text-gray-600">Visualiza tus evaluaciones y progreso</p>
+        </div>
+
+        {/* Alert de Evaluaciones Pendientes */}
+        <div className="mb-8 p-4 bg-primary-50 border-l-4 border-primary-500 rounded-lg shadow-sm">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <h3 className="text-lg font-bold text-primary-700">Evaluaciones Pendientes</h3>
+              <p className="text-sm text-gray-700 font-medium">Tienes 2 evaluaciones pendientes por completar.</p>
+            </div>
+          </div>
+        </div>
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-8 border-b border-gray-200">
+        <div className="flex gap-4 mb-8 border-b-2 border-gray-200">
           <button
             onClick={() => setActiveTab('reportes')}
-            className={`px-4 py-2 font-semibold transition-colors ${
+            className={`px-6 py-3 font-semibold text-base transition-all duration-200 ${
               activeTab === 'reportes'
-                ? 'text-primary-600 border-b-2 border-primary-600'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'text-white bg-primary-600 border-b-3 border-primary-700 rounded-t-lg'
+                : 'text-gray-600 hover:text-primary-500'
             }`}
           >
             Mis Reportes
           </button>
           <button
             onClick={() => setActiveTab('historial')}
-            className={`px-4 py-2 font-semibold transition-colors ${
+            className={`px-6 py-3 font-semibold text-base transition-all duration-200 ${
               activeTab === 'historial'
-                ? 'text-primary-600 border-b-2 border-primary-600'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'text-white bg-primary-600 border-b-3 border-primary-700 rounded-t-lg'
+                : 'text-gray-600 hover:text-primary-500'
             }`}
           >
             Historial

@@ -2,15 +2,6 @@ import React from 'react';
 import type { ButtonProps } from '@/types';
 import clsx from 'clsx';
 
-/**
- * Button Component
- * Componente base reutilizable con múltiples variantes
- * 
- * @example
- * <Button variant="primary" size="md">Click me</Button>
- * <Button variant="secondary" disabled>Disabled</Button>
- * <Button fullWidth>Full Width Button</Button>
- */
 export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
@@ -21,34 +12,26 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-  // Variant styles
-  const variantStyles = {
-    primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700',
-    secondary: 'bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700',
-    success: 'bg-success-500 text-white hover:bg-success-600 active:bg-success-700',
-    danger: 'bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700',
+  const variants = {
+    primary: 'bg-blue-600 hover:bg-blue-700 text-white',
+    secondary: 'bg-gray-600 hover:bg-gray-700 text-white',
+    success: 'bg-green-600 hover:bg-green-700 text-white',
+    danger: 'bg-red-600 hover:bg-red-700 text-white',
   };
 
-  // Size styles
-  const sizeStyles = {
-    sm: 'px-3 py-1 text-sm min-h-8',
-    md: 'px-4 py-2 text-base min-h-10',
-    lg: 'px-6 py-3 text-lg min-h-12',
+  const sizes = {
+    sm: 'px-3 py-1 text-sm',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-6 py-3 text-lg',
   };
-
-  const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed';
-
-  const fullWidthStyle = fullWidth ? 'w-full' : '';
 
   const buttonClass = clsx(
-    baseStyles,
-    variantStyles[variant],
-    sizeStyles[size],
-    fullWidthStyle,
-    className,
-    {
-      'opacity-70 cursor-not-allowed': disabled || isLoading,
-    }
+    'inline-flex items-center justify-center rounded-lg transition-colors focus:outline-none',
+    variants[variant],
+    sizes[size],
+    fullWidth && 'w-full',
+    disabled && 'opacity-50 cursor-not-allowed',
+    className
   );
 
   return (
@@ -57,10 +40,14 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading && (
-        <span className="mr-2 h-4 w-4 border-2 border-current border-r-transparent rounded-full animate-spin" />
+      {isLoading ? (
+        <>
+          <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+          Cargando...
+        </>
+      ) : (
+        children
       )}
-      {children}
     </button>
   );
 };

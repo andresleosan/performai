@@ -36,7 +36,7 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-500 via-secondary-500 to-primary-700 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-600 via-primary-500 to-secondary-600 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Card>
           <CardBody>
@@ -50,8 +50,8 @@ export const LoginPage: React.FC = () => {
             {!showLoginForm ? (
               <>
                 <div className="space-y-4">
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h2 className="font-semibold text-secondary-700 mb-3">
+                  <div className="bg-primary-50 border-2 border-primary-200 rounded-lg p-4">
+                    <h2 className="font-semibold text-primary-700 mb-3">
                       Términos y Condiciones
                     </h2>
                     <div className="text-sm text-gray-700 space-y-2 mb-4 max-h-48 overflow-y-auto">

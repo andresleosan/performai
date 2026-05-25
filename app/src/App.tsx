@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from '@/contexts/AuthContext';
 import { EvaluationProvider } from '@/contexts/EvaluationContext';
 import {
+  LoginPage,
   DashboardAdminPage,
   DashboardLiderPage,
   DashboardColaboradorPage,
@@ -28,7 +29,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 /**
  * App Component
- * Componente raíz de la aplicación
+ * Componente raíz de la aplicación con routing
  */
 function App() {
   return (
@@ -36,7 +37,9 @@ function App() {
       <AuthProvider>
         <EvaluationProvider>
           <Routes>
-            
+            {/* Login */}
+            <Route path="/login" element={<LoginPage />} />
+
             {/* Admin Dashboard */}
             <Route
               path="/dashboard/admin"

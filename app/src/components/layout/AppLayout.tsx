@@ -20,11 +20,11 @@ export interface AppLayoutProps {
  */
 export const AppLayout: React.FC<AppLayoutProps> = ({ children, user, onLogout }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-800">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar user={user} onLogout={onLogout} />
       <div className="flex flex-1">
         <Sidebar />
-        <main className="flex-1 ml-64 pt-4 px-6 overflow-auto bg-slate-800 text-gray-100">
+        <main className="flex-1 ml-64 pt-4 px-6 overflow-auto bg-gray-50 text-gray-900">
           {children}
         </main>
       </div>

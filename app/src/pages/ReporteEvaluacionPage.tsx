@@ -75,7 +75,7 @@ export const ReporteEvaluacionPage: React.FC = () => {
           <Card>
             <CardBody className="text-center">
               <p className="text-xs text-gray-500 uppercase font-semibold mb-2">Autoevaluación</p>
-              <p className="text-3xl font-bold text-secondary-600">{reportData.puntuacionAuto}</p>
+              <p className="text-3xl font-bold text-primary-600">{reportData.puntuacionAuto}</p>
               <p className="text-xs text-gray-400">/5</p>
             </CardBody>
           </Card>
@@ -95,7 +95,7 @@ export const ReporteEvaluacionPage: React.FC = () => {
 
         {/* Fortalezas */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-secondary-500 mb-4">Fortalezas</h2>
+          <h2 className="text-2xl font-bold text-primary-700 mb-4">Fortalezas</h2>
           <div className="space-y-3">
             {fortalezas.map((f, idx) => (
               <Card key={idx} className="border-l-4 border-success-500 bg-success-50">
@@ -110,7 +110,7 @@ export const ReporteEvaluacionPage: React.FC = () => {
 
         {/* Áreas de Mejora */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-secondary-500 mb-4">Áreas de Mejora</h2>
+          <h2 className="text-2xl font-bold text-primary-700 mb-4">Áreas de Mejora</h2>
           <div className="space-y-3">
             {mejora.map((m, idx) => (
               <Card key={idx} className="border-l-4 border-danger-500 bg-danger-50">
@@ -125,7 +125,7 @@ export const ReporteEvaluacionPage: React.FC = () => {
 
         {/* Recomendaciones */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-secondary-500 mb-4">Recomendaciones</h2>
+          <h2 className="text-2xl font-bold text-primary-700 mb-4">Recomendaciones</h2>
           <Card>
             <CardBody>
               <ol className="space-y-3">
@@ -142,7 +142,7 @@ export const ReporteEvaluacionPage: React.FC = () => {
 
         {/* Guía 1:1 */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-secondary-500 mb-4">Guía para Reunión 1:1</h2>
+          <h2 className="text-2xl font-bold text-primary-700 mb-4">Guía para Reunión 1:1</h2>
           <Card>
             <CardBody>
               <div className="space-y-4">
