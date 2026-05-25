@@ -155,9 +155,26 @@ export const LoginPage: React.FC = () => {
                   </Button>
                 </form>
 
-                <div className="mt-6 pt-6 border-t border-gray-200 text-center text-sm text-gray-600">
-                  <p>
-                    Demo: Usa cualquier email y contraseña para entrar
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <p className="text-center text-sm text-gray-600 mb-4">
+                    <strong>Credenciales de Prueba:</strong>
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-xs text-gray-700 bg-gray-50 p-3 rounded-lg">
+                    <div>
+                      <p className="font-semibold text-gray-900">Email:</p>
+                      <p className="font-mono bg-white p-2 rounded border border-gray-200 mt-1">
+                        test@performai.com
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Contraseña:</p>
+                      <p className="font-mono bg-white p-2 rounded border border-gray-200 mt-1">
+                        test123
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-3 text-center">
+                    Usa estas credenciales para acceder a la plataforma
                   </p>
                 </div>
               </>

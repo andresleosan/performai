@@ -6,3 +6,5 @@ export type { AuthLayoutProps } from './AuthLayout';
 
 export { DashboardLayout } from './DashboardLayout';
 export type { DashboardLayoutProps } from './DashboardLayout';
+
+export { Sidebar } from './Sidebar';
