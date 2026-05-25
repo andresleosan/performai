@@ -8,10 +8,9 @@ import clsx from 'clsx';
  */
 export interface SidebarProps {
   isOpen: boolean;
-  onToggle: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,47 +27,36 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onToggle }) => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <>
-      <aside
-        className={clsx(
-          'fixed left-0 top-16 h-[calc(100vh-64px)] bg-white border-r-2 border-primary-100 shadow-sm transition-all duration-300 z-40',
-          isOpen ? 'w-64' : 'w-20'
-        )}
-      >
-        <div className="p-4 space-y-2">
-          {menuItems.map((item) => (
-            <button
-              key={item.path}
-              onClick={() => navigate(item.path)}
-              aria-current={isActive(item.path) ? 'page' : undefined}
-              aria-label={item.label}
-              className={clsx(
-                'relative w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left group',
-                isActive(item.path)
-                  ? 'bg-primary-100 text-primary-900 focus:outline-none focus:ring-0'
-                  : 'text-gray-700 border border-transparent hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700 focus:outline-none focus:ring-0'
-              )}
-            >
-              {/* left indicator removed to avoid small visual artifact */}
-              <span className="text-xl flex-shrink-0">{item.icon}</span>
-              {isOpen && (
-                <span className={clsx('font-semibold text-sm truncate', isActive(item.path) && 'text-primary-900')}>
-                  {item.label}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
-      </aside>
-
-      <button
-        onClick={onToggle}
-        className="fixed left-4 top-20 z-50 p-2 hover:bg-gray-100 rounded-lg"
-        aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
-      >
-        {isOpen ? '◀' : '▶'}
-      </button>
-    </>
+    <aside
+      className={clsx(
+        'fixed left-0 top-16 h-[calc(100vh-64px)] bg-white border-r-2 border-primary-100 shadow-sm transition-all duration-300 z-40 overflow-hidden',
+        isOpen ? 'w-64' : 'w-20'
+      )}
+    >
+      <div className="p-4 space-y-2">
+        {menuItems.map((item) => (
+          <button
+            key={item.path}
+            onClick={() => navigate(item.path)}
+            aria-current={isActive(item.path) ? 'page' : undefined}
+            aria-label={item.label}
+            className={clsx(
+              'relative w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left group',
+              isActive(item.path)
+                ? 'bg-primary-100 text-primary-900 focus:outline-none focus:ring-0'
+                : 'text-gray-700 border border-transparent hover:bg-primary-50 hover:border-primary-100 hover:text-primary-700 focus:outline-none focus:ring-0'
+            )}
+          >
+            <span className="text-xl flex-shrink-0">{item.icon}</span>
+            {isOpen && (
+              <span className={clsx('font-semibold text-sm truncate', isActive(item.path) && 'text-primary-900')}>
+                {item.label}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+    </aside>
   );
 };
 

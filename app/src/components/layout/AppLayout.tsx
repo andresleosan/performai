@@ -27,7 +27,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children, user, onLogout }
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar user={user} onLogout={onLogout} onToggleSidebar={toggleSidebar} />
       <div className="flex flex-1">
-        <Sidebar isOpen={isSidebarOpen} onToggle={toggleSidebar} />
+        <Sidebar isOpen={isSidebarOpen} />
         <main className={`flex-1 ${isSidebarOpen ? 'ml-64' : 'ml-20'} pt-16 px-6 overflow-auto bg-gray-50 text-gray-900`}>
           {children}
         </main>

@@ -53,7 +53,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2">
             {/* Sidebar toggle for desktop */}
             {typeof onToggleSidebar === 'function' && (
-              <button onClick={onToggleSidebar} className="mr-2 p-2 rounded hover:bg-white/10 hidden md:inline-block">
+              <button
+                type="button"
+                aria-label="Alternar menú"
+                onClick={onToggleSidebar}
+                className="mr-2 p-2 rounded bg-white/10 hover:bg-white/20 transition-colors focus:outline-none focus:ring-0 hidden md:inline-block"
+              >
                 ☰
               </button>
             )}
