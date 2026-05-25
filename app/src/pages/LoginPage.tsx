@@ -13,6 +13,14 @@ export const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(false);
+
+  const handleAcceptTerms = () => {
+    if (acceptedTerms) {
+      setShowLoginForm(true);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,50 +47,121 @@ export const LoginPage: React.FC = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <Input
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@email.com"
-                required
-                fullWidth
-              />
+            {!showLoginForm ? (
+              <>
+                <div className="space-y-4">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h2 className="font-semibold text-secondary-700 mb-3">
+                      Términos y Condiciones
+                    </h2>
+                    <div className="text-sm text-gray-700 space-y-2 mb-4 max-h-48 overflow-y-auto">
+                      <p>
+                        • Esta plataforma es para evaluaciones profesionales 180°
+                      </p>
+                      <p>
+                        • Todos los datos serán tratados de forma confidencial
+                      </p>
+                      <p>
+                        • Acepto que mis evaluaciones serán almacenadas en la base de datos segura
+                      </p>
+                      <p>
+                        • Entiendo que la información será usada solo para propósitos de desarrollo profesional
+                      </p>
+                      <p>
+                        • Los administradores tienen acceso a mis datos para análisis
+                      </p>
+                    </div>
+                  </div>
 
-              <Input
-                label="Contraseña"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                fullWidth
-              />
+                  <label className="flex items-start space-x-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={acceptedTerms}
+                      onChange={(e) => setAcceptedTerms(e.target.checked)}
+                      className="mt-1 w-5 h-5 text-primary-600 rounded border-gray-300"
+                    />
+                    <span className="text-sm text-gray-700">
+                      Acepto los términos y condiciones de PerformAI
+                    </span>
+                  </label>
 
-              {error && (
-                <div className="p-3 bg-danger-50 border border-danger-500 rounded-md text-danger-700 text-sm">
-                  {error}
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    fullWidth
+                    disabled={!acceptedTerms}
+                    onClick={handleAcceptTerms}
+                  >
+                    Aceptar y Continuar
+                  </Button>
+
+                  <div className="mt-4 pt-4 border-t border-gray-200 text-center text-xs text-gray-500">
+                    <p>
+                      Al continuar, aceptas nuestra política de privacidad y seguridad de datos
+                    </p>
+                  </div>
                 </div>
-              )}
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    setShowLoginForm(false);
+                    setEmail('');
+                    setPassword('');
+                    setError('');
+                  }}
+                  className="mb-4 text-primary-600 text-sm hover:text-primary-700 flex items-center"
+                >
+                  ← Volver
+                </button>
 
-              <Button
-                variant="primary"
-                size="lg"
-                fullWidth
-                isLoading={isLoading}
-                disabled={isLoading}
-                type="submit"
-              >
-                {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-              </Button>
-            </form>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <Input
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="tu@email.com"
+                    required
+                    fullWidth
+                  />
 
-            <div className="mt-6 pt-6 border-t border-gray-200 text-center text-sm text-gray-600">
-              <p>
-                Demo: Usa cualquier email y contraseña para entrar
-              </p>
-            </div>
+                  <Input
+                    label="Contraseña"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                    fullWidth
+                  />
+
+                  {error && (
+                    <div className="p-3 bg-danger-50 border border-danger-500 rounded-md text-danger-700 text-sm">
+                      {error}
+                    </div>
+                  )}
+
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    fullWidth
+                    isLoading={isLoading}
+                    disabled={isLoading}
+                    type="submit"
+                  >
+                    {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+                  </Button>
+                </form>
+
+                <div className="mt-6 pt-6 border-t border-gray-200 text-center text-sm text-gray-600">
+                  <p>
+                    Demo: Usa cualquier email y contraseña para entrar
+                  </p>
+                </div>
+              </>
+            )}
           </CardBody>
         </Card>
       </div>
