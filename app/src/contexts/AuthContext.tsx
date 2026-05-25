@@ -31,6 +31,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           const userData = await getDocument('users', firebaseUser.uid);
           if (userData) {
             setUser(userData as User);
+            localStorage.setItem('user', JSON.stringify(userData));
           } else {
             // Si no existe en Firestore, crear un usuario temporal
             const tempUser: User = {
@@ -41,6 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               avatar: firebaseUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${firebaseUser.email}`,
             };
             setUser(tempUser);
+            localStorage.setItem('user', JSON.stringify(tempUser));
           }
         } catch (error) {
           console.error('Error fetching user data:', error);
@@ -53,9 +55,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             avatar: firebaseUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${firebaseUser.email}`,
           };
           setUser(tempUser);
+          localStorage.setItem('user', JSON.stringify(tempUser));
         }
       } else {
         setUser(null);
+        localStorage.removeItem('user');
       }
       setIsLoading(false);
     });
@@ -74,6 +78,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const userData = await getDocument('users', firebaseUser.uid);
       if (userData) {
         setUser(userData as User);
+        localStorage.setItem('user', JSON.stringify(userData));
       } else {
         const tempUser: User = {
           id: firebaseUser.uid,
@@ -83,6 +88,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           avatar: firebaseUser.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
         };
         setUser(tempUser);
+        localStorage.setItem('user', JSON.stringify(tempUser));
       }
     } catch (error) {
       // Fallback: Si Firebase falla, usar mock para testing
@@ -95,6 +101,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
       };
       setUser(mockUser);
+      localStorage.setItem('user', JSON.stringify(mockUser));
     } finally {
       setIsLoading(false);
     }
@@ -104,9 +111,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       await signOut(auth);
       setUser(null);
+      localStorage.removeItem('user');
     } catch (error) {
+      // Si Firebase falla, al menos limpiar localStorage
+      setUser(null);
+      localStorage.removeItem('user');
       console.error('Logout error:', error);
-      throw error;
     }
   }, []);
 

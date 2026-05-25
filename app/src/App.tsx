@@ -3,6 +3,15 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from '@/contexts/AuthContext';
 import { EvaluationProvider } from '@/contexts/EvaluationContext';
 import { LoginPage } from '@/pages/LoginPage';
+import {
+  DashboardAdminPage,
+  DashboardLiderPage,
+  DashboardColaboradorPage,
+  EvaluacionFormularioPage,
+  ConfigTiposPage,
+  EditorPreguntasPage,
+  ReporteEvaluacionPage,
+} from '@/pages';
 
 /**
  * ProtectedRoute Component
@@ -30,38 +39,83 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             
-            {/* Dashboard - Protegida */}
+            {/* Admin Dashboard */}
             <Route
-              path="/dashboard"
+              path="/dashboard/admin"
               element={
                 <ProtectedRoute>
-                  <div className="p-8 text-center">
-                    <h1 className="text-4xl font-bold text-primary-600 mb-4">
-                      Dashboard
-                    </h1>
-                    <p className="text-gray-600">Página de dashboard - En desarrollo</p>
-                  </div>
+                  <DashboardAdminPage />
                 </ProtectedRoute>
               }
             />
 
-            {/* Evaluación - Protegida */}
+            {/* Líder Dashboard */}
+            <Route
+              path="/dashboard/lider"
+              element={
+                <ProtectedRoute>
+                  <DashboardLiderPage />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Colaborador Dashboard */}
+            <Route
+              path="/dashboard/colaborador"
+              element={
+                <ProtectedRoute>
+                  <DashboardColaboradorPage />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Default Dashboard - Redirect to colaborador */}
+            <Route
+              path="/dashboard"
+              element={<Navigate to="/dashboard/colaborador" replace />}
+            />
+
+            {/* Evaluación Form */}
             <Route
               path="/evaluacion"
               element={
                 <ProtectedRoute>
-                  <div className="p-8 text-center">
-                    <h1 className="text-4xl font-bold text-primary-600 mb-4">
-                      Formulario de Evaluación
-                    </h1>
-                    <p className="text-gray-600">Página de evaluación - En desarrollo</p>
-                  </div>
+                  <EvaluacionFormularioPage />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Configuration Pages */}
+            <Route
+              path="/config/tipos"
+              element={
+                <ProtectedRoute>
+                  <ConfigTiposPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/config/preguntas"
+              element={
+                <ProtectedRoute>
+                  <EditorPreguntasPage />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Reports */}
+            <Route
+              path="/reportes/:id"
+              element={
+                <ProtectedRoute>
+                  <ReporteEvaluacionPage />
                 </ProtectedRoute>
               }
             />
 
             {/* Root redirect */}
-            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
             {/* 404 */}
             <Route
