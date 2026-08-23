@@ -26,7 +26,7 @@ https://vercel.com/dashboard
 
 | Variable                            | Valor                                       | Descripción         |
 | ----------------------------------- | ------------------------------------------- | ------------------- |
-| `VITE_FIREBASE_API_KEY`             | `AIzaSyDOobkXd8ZSxny3DhdFlltuqbR8ebYfsK0`   | API Key             |
+| `VITE_FIREBASE_API_KEY`             | `VITE_FIREBASE_API_KEY=<configure-in-Vercel>` | API Key             |
 | `VITE_FIREBASE_AUTH_DOMAIN`         | `performai-bb68f.firebaseapp.com`           | Auth Domain         |
 | `VITE_FIREBASE_PROJECT_ID`          | `performai-bb68f`                           | Project ID          |
 | `VITE_FIREBASE_STORAGE_BUCKET`      | `performai-bb68f.firebasestorage.app`       | Storage Bucket      |
@@ -62,7 +62,7 @@ vercel login
 cd /path/to/performai
 
 # Crear archivo .env local
-echo "VITE_FIREBASE_API_KEY=AIzaSyDOobkXd8ZSxny3DhdFlltuqbR8ebYfsK0" > .env.local
+echo "VITE_FIREBASE_API_KEY=<configure-locally>" > .env.local
 echo "VITE_FIREBASE_AUTH_DOMAIN=performai-bb68f.firebaseapp.com" >> .env.local
 echo "VITE_FIREBASE_PROJECT_ID=performai-bb68f" >> .env.local
 echo "VITE_FIREBASE_STORAGE_BUCKET=performai-bb68f.firebasestorage.app" >> .env.local
