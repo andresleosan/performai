@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardBody, Button } from '@/components/common';
 import { AppLayout } from '@/components/layout';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 
 interface EvaluationTarget {
   id: number;
@@ -20,7 +20,14 @@ interface Answer {
 export const EvaluacionFormularioPage: React.FC = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [evaluationTarget, setEvaluationTarget] = useState<EvaluationTarget | null>(null);
+  const [evaluationTarget] = useState<EvaluationTarget | null>(() => {
+    try {
+      const stored = localStorage.getItem('evaluationTarget');
+      return stored ? JSON.parse(stored) as EvaluationTarget : null;
+    } catch {
+      return null;
+    }
+  });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, Answer>>({});
   const [currentValue, setCurrentValue] = useState(3);
@@ -42,13 +49,6 @@ export const EvaluacionFormularioPage: React.FC = () => {
     { id: 'q10', text: '¿Demuestra ética profesional y valores empresariales?', category: 'Ética' },
     { id: 'q11', text: '¿Tiene potencial para asumir mayores responsabilidades?', category: 'Potencial' },
   ];
-
-  useEffect(() => {
-    const stored = localStorage.getItem('evaluationTarget');
-    if (stored) {
-      setEvaluationTarget(JSON.parse(stored));
-    }
-  }, []);
 
   const currentQuestion = questions[currentQuestionIndex];
   const answeredCount = Object.keys(answers).length;

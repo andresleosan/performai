@@ -33,8 +33,6 @@ export const Modal: React.FC<ModalProps> = ({
   size = 'md',
   closeButton = true,
 }) => {
-  if (!isOpen) return null;
-
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -56,6 +54,8 @@ export const Modal: React.FC<ModalProps> = ({
       return () => document.removeEventListener('keydown', handleEscapeKey);
     }
   }, [isOpen, handleEscapeKey]);
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">

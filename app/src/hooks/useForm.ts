@@ -23,7 +23,7 @@ export interface UseFormState<T> {
  *   onSubmit: (values) => console.log(values)
  * });
  */
-export function useForm<T extends Record<string, any>>(options: UseFormOptions<T>) {
+export function useForm<T extends Record<string, unknown>>(options: UseFormOptions<T>) {
   const { initialValues, onSubmit, validate } = options;
 
   const [state, setState] = useState<UseFormState<T>>({
@@ -108,7 +108,7 @@ export function useForm<T extends Record<string, any>>(options: UseFormOptions<T
     });
   }, [initialValues]);
 
-  const setFieldValue = useCallback((name: keyof T, value: any) => {
+  const setFieldValue = useCallback(<K extends keyof T>(name: K, value: T[K]) => {
     setState((prev) => ({
       ...prev,
       values: {

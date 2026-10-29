@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppLayout } from '@/components/layout';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 import { Card, CardBody, Button, Badge } from '@/components/common';
 
 export const DashboardLiderPage: React.FC = () => {
@@ -30,7 +30,7 @@ export const DashboardLiderPage: React.FC = () => {
     },
   ];
 
-  const handleStartEvaluation = (evaluation: any) => {
+  const handleStartEvaluation = (evaluation: (typeof pendingEvaluations)[number]) => {
     localStorage.setItem('evaluationTarget', JSON.stringify(evaluation));
     navigate('/evaluacion');
   };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardBody, Button, Badge, Table, Modal, Input } from '@/components/common';
 import { AppLayout } from '@/components/layout';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 
 export const ConfigTiposPage: React.FC = () => {
   const { user, logout } = useAuth();
@@ -41,7 +41,7 @@ export const ConfigTiposPage: React.FC = () => {
                   {
                     key: 'estado',
                     label: 'Estado',
-                    render: (value: string) => (
+                    render: (value) => (
                       <Badge color={value === 'Fijo' ? 'gray' : 'purple'}>{value}</Badge>
                     ),
                   },
@@ -64,7 +64,7 @@ export const ConfigTiposPage: React.FC = () => {
                   {
                     key: 'estado',
                     label: 'Acciones',
-                    render: (_val: string) => (
+                    render: () => (
                       <div className="flex gap-2">
                         <Button variant="secondary" size="sm">
                           Editar

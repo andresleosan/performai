@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardBody, Badge, Table } from '@/components/common';
 import { AppLayout } from '@/components/layout';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 
 export const DashboardColaboradorPage: React.FC = () => {
   const { user, logout } = useAuth();
@@ -86,7 +86,7 @@ export const DashboardColaboradorPage: React.FC = () => {
                   {
                     key: 'estado',
                     label: 'Estado',
-                    render: (val: string) => (
+                    render: (val) => (
                       <Badge color={val === 'Completado' ? 'green' : 'purple'}>{val}</Badge>
                     ),
                   },

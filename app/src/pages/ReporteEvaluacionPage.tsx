@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardBody, CardHeader, Badge, Button } from '@/components/common';
 import { AppLayout } from '@/components/layout';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 
 export const ReporteEvaluacionPage: React.FC = () => {
   const { user, logout } = useAuth();

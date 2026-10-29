@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import type { EvaluationContextType, Evaluation, EvaluationResponse } from '@/types';
 
-const EvaluationContext = createContext<EvaluationContextType | undefined>(undefined);
+import { EvaluationContext } from './evaluation-context';
 
 export interface EvaluationProviderProps {
   children: React.ReactNode;
@@ -74,18 +74,3 @@ export const EvaluationProvider: React.FC<EvaluationProviderProps> = ({ children
     </EvaluationContext.Provider>
   );
 };
-
-/**
- * Hook para usar el contexto de evaluación
- */
-export const useEvaluation = (): EvaluationContextType => {
-  const context = useContext(EvaluationContext);
-  if (!context) {
-    throw new Error(
-      'useEvaluation debe ser usado dentro de EvaluationProvider'
-    );
-  }
-  return context;
-};
-
-export default EvaluationContext;

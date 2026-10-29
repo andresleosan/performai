@@ -59,7 +59,7 @@ export const Input: React.FC<InputProps> = ({
 /**
  * Textarea Component
  */
-export const Textarea: React.FC<InputProps & { rows?: number }> = ({
+export const Textarea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaElement> & Pick<InputProps, 'label' | 'error' | 'helpText' | 'fullWidth'>> = ({
   label,
   error,
   helpText,
@@ -93,7 +93,7 @@ export const Textarea: React.FC<InputProps & { rows?: number }> = ({
         className={textareaClass}
         rows={rows}
         disabled={disabled}
-        {...(props as any)}
+        {...props}
       />
 
       {error && (

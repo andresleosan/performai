@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:security": "node scripts/security-regression.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.0",
@@ -17,7 +18,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@types/node": "^24.12.3",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
@@ -27,6 +28,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "playwright": "1.62.1",
     "postcss": "^8.5.15",
     "react-router-dom": "^7.15.1",
     "tailwindcss": "^4.3.0",
@@ -40,5 +42,8 @@
     "brace-expansion@>=5 <6": "5.0.12",
     "browserslist@>=4 <5": "4.28.7",
     "zod@>=4 <5": "4.6.6"
+  },
+  "engines": {
+    "node": "^22.23.4 || ^24.22.1 || ^26.12.1"
   }
 }

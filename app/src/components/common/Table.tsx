@@ -6,12 +6,12 @@ export interface TableColumn {
   label: string;
   width?: string;
   align?: 'left' | 'center' | 'right';
-  render?: (value: any, row: any) => ReactNode;
+  render?: (value: ReactNode, row: Record<string, ReactNode>) => ReactNode;
 }
 
 export interface TableProps {
   columns: TableColumn[];
-  data: any[];
+  data: Record<string, ReactNode>[];
   striped?: boolean;
   hoverable?: boolean;
   responsive?: boolean;

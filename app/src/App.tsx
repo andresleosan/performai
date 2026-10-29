@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 import { EvaluationProvider } from '@/contexts/EvaluationContext';
 
 const LoginPage = lazy(() => import('@/pages/LoginPage').then((module) => ({ default: module.LoginPage })));
@@ -17,9 +18,13 @@ const ReporteEvaluacionPage = lazy(() => import('@/pages/ReporteEvaluacionPage')
  * Envolvedor para rutas protegidas
  */
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const token = localStorage.getItem('user');
-  
-  if (!token) {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div role="status">Comprobando sesión...</div>;
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 

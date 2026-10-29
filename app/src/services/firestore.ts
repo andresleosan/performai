@@ -9,8 +9,9 @@ import {
   updateDoc,
   deleteDoc,
   type QueryConstraint,
+  type Query,
+  type UpdateData,
   type DocumentData,
-  type QuerySnapshot,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -43,7 +44,7 @@ export async function getDocuments<T extends DocumentData>(
       ? query(collection(db, collectionName), ...constraints)
       : query(collection(db, collectionName));
     
-    const querySnapshot: QuerySnapshot<T> = await getDocs(q as any);
+    const querySnapshot = await getDocs(q as Query<T>);
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as T));
   } catch (error) {
     console.error(`Error getting documents from ${collectionName}:`, error);
@@ -57,14 +58,14 @@ export async function getDocuments<T extends DocumentData>(
 export async function getDocumentsByField<T extends DocumentData>(
   collectionName: string,
   fieldName: string,
-  fieldValue: any
+  fieldValue: unknown
 ): Promise<T[]> {
   try {
     const q = query(
       collection(db, collectionName),
       where(fieldName, '==', fieldValue)
     );
-    const querySnapshot: QuerySnapshot<T> = await getDocs(q as any);
+    const querySnapshot = await getDocs(q as Query<T>);
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as T));
   } catch (error) {
     console.error(
@@ -101,7 +102,7 @@ export async function updateDocument<T extends DocumentData>(
 ): Promise<void> {
   try {
     const docRef = doc(db, collectionName, docId);
-    await updateDoc(docRef as any, data as any);
+    await updateDoc(docRef, data as UpdateData<DocumentData>);
   } catch (error) {
     console.error(
       `Error updating document ${docId} in ${collectionName}:`,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardBody, Badge, Table } from '@/components/common';
 import { AppLayout } from '@/components/layout';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 
 /**
  * DashboardAdminPage
@@ -111,7 +111,7 @@ export const DashboardAdminPage: React.FC = () => {
                   ...col,
                   render:
                     col.key === 'estado'
-                      ? (value: string) => (
+                      ? (value) => (
                           <Badge color={value === 'Completado' ? 'green' : value === 'En Progreso' ? 'purple' : 'gray'}>
                             {value}
                           </Badge>

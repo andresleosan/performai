@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardBody, Button, Badge, Table, Modal, Input, Select } from '@/components/common';
 import { AppLayout } from '@/components/layout';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 
 export const EditorPreguntasPage: React.FC = () => {
   const { user, logout } = useAuth();
@@ -69,7 +69,7 @@ export const EditorPreguntasPage: React.FC = () => {
                 {
                   key: 'estado',
                   label: 'Estado',
-                  render: (val: string) => (
+                  render: (val) => (
                     <Badge color={val === 'Activo' ? 'green' : 'gray'}>{val}</Badge>
                   ),
                 },

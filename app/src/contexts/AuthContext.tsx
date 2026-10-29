@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -8,7 +8,7 @@ import { auth } from '@/services/firebase';
 import { getDocument } from '@/services/firestore';
 import type { AuthContextType, User } from '@/types';
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { AuthContext } from './auth-context';
 
 export interface AuthProviderProps {
   children: React.ReactNode;
@@ -21,28 +21,23 @@ export interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const sessionRevision = useRef(0);
 
   // Sincronizar con Firebase Auth + localStorage
   useEffect(() => {
-    // Primero, verificar si hay usuario en localStorage (para mock auth)
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      try {
-        const user = JSON.parse(storedUser);
-        setUser(user);
-        setIsLoading(false);
-        return;
-      } catch (error) {
-        console.error('Error parsing stored user:', error);
-      }
-    }
-
-    // Si no hay en localStorage, escuchar cambios de Firebase
+    // Firebase es la autoridad de sesion; localStorage no autentica usuarios.
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      const revision = ++sessionRevision.current;
+      const isCurrentSession = () => sessionRevision.current === revision &&
+        auth.currentUser?.uid === firebaseUser?.uid;
       if (firebaseUser) {
+        setUser(null);
+        localStorage.removeItem('user');
+        setIsLoading(true);
         try {
           // Obtener datos del usuario desde Firestore
           const userData = await getDocument('users', firebaseUser.uid);
+          if (!isCurrentSession()) return;
           if (userData) {
             setUser(userData as User);
             localStorage.setItem('user', JSON.stringify(userData));
@@ -59,6 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             localStorage.setItem('user', JSON.stringify(tempUser));
           }
         } catch (error) {
+          if (!isCurrentSession()) return;
           console.error('Error fetching user data:', error);
           // Fallback a usuario temporal
           const tempUser: User = {
@@ -72,26 +68,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           localStorage.setItem('user', JSON.stringify(tempUser));
         }
       } else {
-        // Solo limpiar si no hay usuario en localStorage
-        if (!localStorage.getItem('user')) {
-          setUser(null);
-        }
+        setUser(null);
+        localStorage.removeItem('user');
       }
-      setIsLoading(false);
+      if (isCurrentSession()) setIsLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      sessionRevision.current++;
+      unsubscribe();
+    };
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
     setIsLoading(true);
+    let revision = sessionRevision.current;
     try {
       // Intentar con Firebase Auth
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const firebaseUser = userCredential.user;
+      revision = sessionRevision.current;
 
       // Obtener datos del usuario desde Firestore
       const userData = await getDocument('users', firebaseUser.uid);
+      if (sessionRevision.current !== revision || auth.currentUser?.uid !== firebaseUser.uid) return;
       if (userData) {
         setUser(userData as User);
         localStorage.setItem('user', JSON.stringify(userData));
@@ -107,31 +107,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(tempUser));
       }
     } catch (error) {
-      // Fallback: Si Firebase falla, usar mock para testing
-      console.warn('Firebase Auth falló, usando mock para testing:', error);
-      const mockUser: User = {
-        id: `mock-${Date.now()}`,
-        email,
-        name: email.split('@')[0],
-        role: 'colaborador',
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
-      };
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      if (sessionRevision.current === revision) {
+        setUser(null);
+        localStorage.removeItem('user');
+      }
+      throw error;
     } finally {
-      setIsLoading(false);
+      if (sessionRevision.current === revision) setIsLoading(false);
     }
   }, []);
 
   const logout = useCallback(async () => {
+    sessionRevision.current++;
+    setUser(null);
+    localStorage.removeItem('user');
+    setIsLoading(false);
     try {
       await signOut(auth);
-      setUser(null);
-      localStorage.removeItem('user');
     } catch (error) {
-      // Si Firebase falla, al menos limpiar localStorage
-      setUser(null);
-      localStorage.removeItem('user');
       console.error('Logout error:', error);
     }
   }, []);
@@ -146,16 +139,3 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
-
-/**
- * Hook para usar el contexto de autenticación
- */
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth debe ser usado dentro de AuthProvider');
-  }
-  return context;
-};
-
-export default AuthContext;

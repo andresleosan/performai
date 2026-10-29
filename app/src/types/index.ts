@@ -73,7 +73,7 @@ export interface Evaluation {
   colaboradorId: string;
   liderEmitter: string;
   questions: Question[];
-  answers: Record<string, any>;
+  answers: Record<string, EvaluationResponse>;
   status: 'draft' | 'in_progress' | 'completed' | 'submitted';
   createdAt: Date;
   completedAt?: Date;
